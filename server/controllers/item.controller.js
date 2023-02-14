@@ -16,5 +16,15 @@ db.connect((err) => {
       console.log(error);
     }
   }
-
-module.exports = { selectAll,getOne };
+const addOne= (req,res)=>{
+    try {
+        console.log(req.body)
+        const {username , email , password , phoneN }=req.body;
+      const quer=`INSERT INTO user(username,email,password,phoneN) VALUES ("${username}","${email}","${password}","${phoneN}")`
+       db.promise().query(quer)
+       res.send("sended")
+    } catch (error) {
+      console.log(error);
+    }
+}
+module.exports = { selectAll,getOne ,addOne};
