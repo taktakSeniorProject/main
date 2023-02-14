@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`items` (
   `quantity` INT NOT NULL DEFAULT 1,
   `price` VARCHAR(25) NOT NULL,
   `review_rev_id` INT NOT NULL,
+  `gategorie` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_items_review1_idx` (`review_rev_id` ASC) VISIBLE,
   CONSTRAINT `fk_items_review1`
