@@ -7,10 +7,10 @@ function Login() {
   let password=""
   let email=""
   const verif=(email, password)=>{
-    axios.get(`http://localhost:3000/api/user/getUser/${email}/${bcrypt.hashSync(password)}`).then((res)=>{
-      console.log(res)
-      
-      if(res.data.length===0){
+    axios.get(`http://localhost:3000/api/user/getUser/${email}`).then((res)=>{
+      console.log(res.data)
+
+      if(res.data.length===0 || !bcrypt.compare(password, res.data[0].password)){
         settest(!test)
         
       }else{
