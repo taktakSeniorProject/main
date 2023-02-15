@@ -1,6 +1,5 @@
 // DELETE THIS LINE
-const selectAll = () => {};
-const connection=require("..//database-mysql/index")
+const connection=require("../database-mysql/index")
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 const db = require("../database-mysql");
 db.connect((err) => {
@@ -8,10 +7,12 @@ db.connect((err) => {
     else console.log("db is working");
   });
 
-  const getOne= (email,password)=>{
+  const getOne= (req,res)=>{
     try {
+      
+      const {email,password}=req.params
       const quer=`SELECT * from user WHERE email="${email}" AND password= "${password}"`
-      return  db.promise().query(quer)
+      db.promise().query(quer).then((result)=>res.json(result[0]))
     } catch (error) {
       console.log(error);
     }
@@ -22,9 +23,18 @@ const addOne= (req,res)=>{
         const {username , email , password , phoneN }=req.body;
       const quer=`INSERT INTO user(username,email,password,phoneN) VALUES ("${username}","${email}","${password}","${phoneN}")`
        db.promise().query(quer)
-       res.send("sended")
+       res.send("added")
     } catch (error) {
       console.log(error);
     }
 }
-module.exports = { selectAll,getOne ,addOne};
+const selectAll=(req,res)=>{
+  try {
+    const quer=`SELECT * from user`
+    let result=db.promise().query(quer)
+    res.json(result)
+  } catch (error) {
+    console.log(error);
+  }
+}
+module.exports = {getOne ,addOne,selectAll};

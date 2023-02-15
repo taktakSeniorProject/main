@@ -1,5 +1,5 @@
 const express = require("express");
-const itemRoutes = require('./routes/item.routes')
+const userRoutes = require('./routes/users.routes')
 const cors = require ("cors")
 // TODO: Update this
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/../client/dist"));
 app.use(cors());
-app.use("/api/user", itemRoutes);
+app.use("/api/user", userRoutes);
 
 app.listen(PORT, function () {
   console.log("listening on port 3000!");
