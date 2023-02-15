@@ -7,6 +7,8 @@ import Items from './components/itemsDisplay/items.jsx'
 import Navbar from './components/Navbar/Navbar.jsx'
 import Slider from './components/Slider/Slider.jsx'
 import data from './dummyData'
+import SingUp from './components/SingUp/SingUp.jsx'
+import Login from './components/Login/Login.jsx'
 
 const App = () => {
   const [Data,setData]=useState(data)
@@ -35,6 +37,8 @@ const App = () => {
     <Slider data={data}  />
     <Search filterItems={filterItems} />
     <Sidebar filterCategories={filterCategories} />
+    <SingUp/>
+      <Login/>
     <Items Data={Data} />
     </div>
   )
