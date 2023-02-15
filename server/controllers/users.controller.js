@@ -37,4 +37,5 @@ const selectAll=(req,res)=>{
     console.log(error);
   }
 }
+
 module.exports = {getOne ,addOne,selectAll};

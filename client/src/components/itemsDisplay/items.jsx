@@ -1,13 +1,13 @@
 import React from "react";
 import ItemDetailds from "./itemDetails.jsx";
-function Items ({Data}){
+
+function Items ({Data,selectItem}){
     // console.log(Data);
     return(
         <>
         {Data.map((item,index)=>{
-return <ItemDetailds {...item} key={index} />
+return <ItemDetailds selectItem={selectItem}  {...item} key={index} />
         })}
-      
         </>
     )
 }
