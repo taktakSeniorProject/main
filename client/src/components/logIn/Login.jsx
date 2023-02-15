@@ -101,7 +101,7 @@ function Login() {
       <Button type="primary"  onClick={(e)=>{
         e.preventDefault()
         verif(email,password)
-
+        console.log()
       }}>
         Submit
       </Button>
