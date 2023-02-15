@@ -1,5 +1,6 @@
 // DELETE THIS LINE
-const selectAll = () => {};
+
+
 const connection=require("..//database-mysql/index")
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 const db = require("../database-mysql");
@@ -8,38 +9,25 @@ db.connect((err) => {
     else console.log("db is working");
   });
 
- 
-  
-
-  const getallpostsofoneUser=(items_id,user_id)=>{
-    
+  const getOne= (email,password)=>{
     try {
-      query1=`SELECT * FROM items WHERE "${user_id}"="${items_id}"`
-      return db.promise().query(query1)
+      const quer=`SELECT * from user WHERE email="${email}" AND password= "${password}"`
+      return  db.promise().query(quer)
     } catch (error) {
       console.log(error);
     }
   }
-  
-  const deleteIteam=(id)=>{
+  const GetItemsToBuy =(req,res)=>{
     try{
-      query2=`DELETE FROM items WHERE items="${id}"`
-    } catch (error) {
-      console.log(error);
+const GetItemsToBuy="SELECT * FROM items"
+return db.promise().query(GetItemsToBuy)
+}
+    catch(error){
+console.log(error);
     }
   }
-  
-  const addanitemtouser=()=>{
-    try {
-      query3=`INSERT INTO items (title,description,quantity,price,gategorie) 
-      VALUES("${title}","${description}","${quantity},"${price}","${gategorie}")WHERE "${user_id}"="${items_id}"`
-    }catch(error){
-      console.log(error);
-    }
-  }
-  
-  
 
+   
 
+module.exports = { GetItemsToBuy,getOne};
 
-module.exports = { selectAll,getOne,getallpostsofoneUser,GetItemsToBuy,deleteIteam,addanitemtouser};
