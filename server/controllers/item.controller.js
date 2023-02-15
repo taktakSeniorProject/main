@@ -1,5 +1,6 @@
 // DELETE THIS LINE
 const selectAll = () => {};
+const { error } = require("jquery");
 const connection=require("..//database-mysql/index")
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 const db = require("../database-mysql");
@@ -16,5 +17,15 @@ db.connect((err) => {
       console.log(error);
     }
   }
+  const GetItemsToBuy =(req,res)=>{
+    try{
+const GetItemsToBuy="SELECT * FROM items"
+return db.promise().query(GetItemsToBuy)
+}
+    catch(error){
+console.log(error);
+    }
+  }
 
-module.exports = { selectAll,getOne };
+module.exports = { GetItemsToBuy,selectAll,getOne };
+
