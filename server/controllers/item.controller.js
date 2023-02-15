@@ -9,14 +9,7 @@ db.connect((err) => {
     else console.log("db is working");
   });
 
-  const getOne= (email,password)=>{
-    try {
-      const quer=`SELECT * from user WHERE email="${email}" AND password= "${password}"`
-      return  db.promise().query(quer)
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  //get all Items
   const GetItemsToBuy =(req,res)=>{
     try{
 const GetItemsToBuy="SELECT * FROM items"
@@ -26,6 +19,5 @@ return db.promise().query(GetItemsToBuy)
 console.log(error);
     }
   }
-
-module.exports = { GetItemsToBuy,selectAll,getOne };
+module.exports = { GetItemsToBuy,selectAll };
 
