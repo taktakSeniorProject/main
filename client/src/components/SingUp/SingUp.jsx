@@ -6,7 +6,7 @@ import {
   PhoneOutlined,
   LockOutlined,
 } from "@ant-design/icons";
-const bcrypt=require("bcryptjs");
+const bcrypt = require("bcryptjs");
 import axios from "axios";
 function SingUp() {
   const [verif, setverif] = useState(false);
@@ -17,6 +17,7 @@ function SingUp() {
   let phone = "";
   let password = "";
   let confirmPassword = "";
+
   const add = (fullname, email, phone, password) => {
     try {
       axios
@@ -39,6 +40,8 @@ function SingUp() {
         prefix={<UserOutlined />}
         onChange={(e) => {
           fullname = e.target.value;
+          if (fullname.length === 0) setUsername();
+          else setUsername(true);
         }}
       />
       {username && (
@@ -62,16 +65,47 @@ function SingUp() {
         prefix={<MailOutlined />}
         onChange={(e) => {
           email = e.target.value;
+          if (email.indexOf("@") !== -1 && email.indexOf("gmail.com") !== -1)
+            setemail(false);
+          else setemail(true);
         }}
       />
+      {emal && (
+        <>
+          <Space
+            direction="vertical"
+            style={{
+              width: "100%",
+            }}
+          ></Space>
+          <Alert message="email are invalid" type="error" />
+        </>
+      )}
       <Input
         type="text"
         placeholder="Phone Number"
         prefix={<PhoneOutlined />}
         onChange={(e) => {
           phone = e.target.value;
+          if (!phone.length) {
+            return setPhone(true);
+          } else if (phone.length !== 8) setPhone(false);
+          else {
+            setPhone(true);
+          }
         }}
       />
+      {!phoneN && (
+        <>
+          <Space
+            direction="vertical"
+            style={{
+              width: "100%",
+            }}
+          ></Space>
+          <Alert message="phone number need to be 8 numbers" type="error" />
+        </>
+      )}
       <Input
         type="password"
         placeholder="Password"
@@ -107,7 +141,13 @@ function SingUp() {
       <Button
         type="primary"
         onClick={() => {
-          if (password !== confirmPassword) {
+          if (
+            password !== confirmPassword &&
+            username &&
+            emal &&
+            passworde &&
+            phoneN
+          ) {
             setverif(!verif);
           } else {
             console.log(fullname, email, phone, password);
