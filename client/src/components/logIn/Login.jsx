@@ -1,9 +1,25 @@
-import React from 'react'
-import { Button, Checkbox, Form, Input } from 'antd';
+import React, { useState } from 'react'
+import { Button, Checkbox, Form, Input , Alert, Space  } from 'antd';
 import axios from 'axios';
+const bcrypt=require("bcryptjs");
 function Login() {
+  const [test, settest] = useState(false)
+  let password=""
+  let email=""
   const verif=(email, password)=>{
-    axios.get(`http://localhost:3000/api/user/addUser`)
+    axios.get(`http://localhost:3000/api/user/getUser/${email}`).then((res)=>{
+      console.log(res.data)
+
+      if(res.data.length===0 || !bcrypt.compare(password, res.data[0].password)){
+        settest(!test)
+        
+      }else{
+        alert('msg');
+        localStorage.setItem('token', res.data.token)
+        localStorage.setItem('user', JSON.stringify(res.data[0]))
+        window.location.href = '/'
+      }
+    })
   }
       return (
     <div><Form
@@ -23,8 +39,8 @@ function Login() {
     autoComplete="off"
   >
     <Form.Item
-      label="Username"
-      name="username"
+      label="email"
+      name="email"
       rules={[
         {
           required: true,
@@ -32,7 +48,10 @@ function Login() {
         },
       ]}
     >
-      <Input />
+      <Input id='email' onChange={(e)=>{
+        email=e.target.value
+      }} />
+      <span id='error1'></span>
     </Form.Item>
 
     <Form.Item
@@ -45,7 +64,10 @@ function Login() {
         },
       ]}
     >
-      <Input.Password />
+      <Input.Password id='password' onChange={(e)=>{
+        password=e.target.value 
+      }}/>
+      <span id='error2'></span>
     </Form.Item>
 
     <Form.Item
@@ -55,7 +77,18 @@ function Login() {
         offset: 8,
         span: 16,
       }}
-    >
+    > {test && <>
+      <Space
+          direction="vertical"
+          style={{
+            width: "100%",
+          }}
+        ></Space>
+        <Alert
+          message="Password and email are invalid"
+          type="error"
+        />
+    </>}
       <Checkbox>Remember me</Checkbox>
     </Form.Item>
 
@@ -65,9 +98,14 @@ function Login() {
         span: 16,
       }}
     >
-      <Button type="primary" htmlType="submit">
+      <Button type="primary"  onClick={(e)=>{
+        e.preventDefault()
+        verif(email,password)
+        console.log()
+      }}>
         Submit
       </Button>
+     
     </Form.Item>
   </Form></div>
   )

@@ -9,7 +9,7 @@ import Slider from './components/Slider/Slider.jsx'
 import data from './dummyData'
 import SingUp from './components/SingUp/SingUp.jsx'
 import Login from './components/Login/Login.jsx'
-
+import UploadImg from "./components/cloudD/UploadImg.jsx"
 const App = () => {
   const [Data,setData]=useState(data)
    console.log(Data);
@@ -40,6 +40,7 @@ const App = () => {
     <SingUp/>
       <Login/>
     <Items Data={Data} />
+    <UploadImg/>
     </div>
   )
 }

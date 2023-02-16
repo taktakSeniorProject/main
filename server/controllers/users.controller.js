@@ -10,8 +10,8 @@ db.connect((err) => {
   const getOne= (req,res)=>{
     try {
       
-      const {email,password}=req.params
-      const quer=`SELECT * from user WHERE email="${email}" AND password= "${password}"`
+      const {email}=req.params
+      const quer=`SELECT * from user WHERE email="${email}"`
       db.promise().query(quer).then((result)=>res.json(result[0]))
     } catch (error) {
       console.log(error);
@@ -37,4 +37,16 @@ const selectAll=(req,res)=>{
     console.log(error);
   }
 }
-module.exports = {getOne ,addOne,selectAll};
+const addImguser=(req,res)=>{
+  try {
+    console.log(req.body)
+    const {id}=req.params
+    const {profile}=req.body;
+    const quer=`UPDATE user SET profile = "${profile}" where user_id= ${id}`
+    db.promise().query(quer)
+    res.send("added")
+  } catch (error) {
+    console.log(error);
+  }
+}
+module.exports = {getOne ,addOne,selectAll,addImguser};
