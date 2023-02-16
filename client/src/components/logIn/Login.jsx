@@ -9,16 +9,17 @@ function Login() {
   let password=""
   let email=""
   const verif=(email, password)=>{
-    axios.get(`http://localhost:3000/api/user/getUser/${email}`).then((res)=>{
-      console.log(res.data)
+    console.log(localStorage.getItem('access_token'))
+    axios.get(`http://localhost:3000/api/user/getUser`,{headers:{"authorization":`Bearer ${localStorage.getItem('access_token')}`}}).then((res)=>{
+      console.log(res)
 
-      if(res.data.length===0 || !bcrypt.compare(password, res.data[0].password)){
+      if(res.data.length===0 || !bcrypt.compare(password, res.data.password)){
+        alert('Please enter')
         settest(!test)
         
       }else{
         alert('msg');
-        localStorage.setItem('token', res.data.token)
-        localStorage.setItem('user', JSON.stringify(res.data[0]))
+        localStorage.setItem('user', JSON.stringify(res.data))
         window.location.href = '/'
       }
     })
@@ -52,13 +53,13 @@ function Login() {
     >
       <Input onChange={(e)=>{
         email=e.target.value
-        if(email.indexOf("@")!==-1 && email.indexOf("gmail.com")!==-1){
-          setemail(false)
+        // if(email.indexOf("@")!==-1 && email.indexOf("gmail.com")!==-1){
+        //   setemail(false)
 
-        }
-        else{
-          setemail(true)
-        }
+        // }
+        // else{
+        //   setemail(true)
+        // }
       }} />
       {emailTest && <>
         <Space
@@ -87,11 +88,11 @@ function Login() {
     >
       <Input.Password  onChange={(e)=>{
         password=e.target.value
-        if(password.length>4){
-          setpassword(false)
-        }else{
-          setpassword(true)
-        } 
+        // if(password.length>4){
+        //   setpassword(false)
+        // }else{
+        //   setpassword(true)
+        // } 
       }}/>
       <span id='error2'></span>
     </Form.Item>
@@ -140,6 +141,7 @@ function Login() {
     >
       <Button type="primary"  onClick={(e)=>{
         e.preventDefault()
+        console.log(email,password)
         verif(email,password)
         console.log()
       }}>
