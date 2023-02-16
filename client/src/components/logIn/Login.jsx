@@ -1,9 +1,27 @@
-import React from 'react'
-import { Button, Checkbox, Form, Input } from 'antd';
+import React, { useState } from 'react'
+import { Button, Checkbox, Form, Input , Alert, Space  } from 'antd';
 import axios from 'axios';
+const bcrypt=require("bcryptjs");
 function Login() {
+  const [test, settest] = useState(false)
+  const [emailTest, setemail] = useState(true)
+  const [passwordTest, setpassword] = useState(true)
+  let password=""
+  let email=""
   const verif=(email, password)=>{
-    axios.get(`http://localhost:3000/api/user/addUser`)
+    axios.get(`http://localhost:3000/api/user/getUser/${email}`).then((res)=>{
+      console.log(res.data)
+
+      if(res.data.length===0 || !bcrypt.compare(password, res.data[0].password)){
+        settest(!test)
+        
+      }else{
+        alert('msg');
+        localStorage.setItem('token', res.data.token)
+        localStorage.setItem('user', JSON.stringify(res.data[0]))
+        window.location.href = '/'
+      }
+    })
   }
       return (
     <div><Form
@@ -23,8 +41,8 @@ function Login() {
     autoComplete="off"
   >
     <Form.Item
-      label="Username"
-      name="username"
+      label="email"
+      name="email"
       rules={[
         {
           required: true,
@@ -32,7 +50,29 @@ function Login() {
         },
       ]}
     >
-      <Input />
+      <Input onChange={(e)=>{
+        email=e.target.value
+        if(email.indexOf("@")!==-1 && email.indexOf("gmail.com")!==-1){
+          setemail(false)
+
+        }
+        else{
+          setemail(true)
+        }
+      }} />
+      {emailTest && <>
+        <Space
+          direction="vertical"
+          style={{
+            width: "100%",
+          }}
+        ></Space>
+        <Alert
+          message="email are invalid"
+          type="error"
+        />
+    </>
+      }
     </Form.Item>
 
     <Form.Item
@@ -45,7 +85,15 @@ function Login() {
         },
       ]}
     >
-      <Input.Password />
+      <Input.Password  onChange={(e)=>{
+        password=e.target.value
+        if(password.length>4){
+          setpassword(false)
+        }else{
+          setpassword(true)
+        } 
+      }}/>
+      <span id='error2'></span>
     </Form.Item>
 
     <Form.Item
@@ -56,6 +104,31 @@ function Login() {
         span: 16,
       }}
     >
+      {passwordTest && <>
+        <Space
+          direction="vertical"
+          style={{
+            width: "100%",
+          }}
+        ></Space>
+        <Alert
+          message="password is to  short"
+          type="error"
+        />
+    </>
+      }
+       {test && <>
+      <Space
+          direction="vertical"
+          style={{
+            width: "100%",
+          }}
+        ></Space>
+        <Alert
+          message="Password and email are invalid"
+          type="error"
+        />
+    </>}
       <Checkbox>Remember me</Checkbox>
     </Form.Item>
 
@@ -65,9 +138,14 @@ function Login() {
         span: 16,
       }}
     >
-      <Button type="primary" htmlType="submit">
+      <Button type="primary"  onClick={(e)=>{
+        e.preventDefault()
+        verif(email,password)
+        console.log()
+      }}>
         Submit
       </Button>
+     
     </Form.Item>
   </Form></div>
   )
