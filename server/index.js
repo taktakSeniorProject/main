@@ -1,3 +1,4 @@
+
 const express = require("express");
 const userRoutes = require('./routes/users.routes')
 const cors = require ("cors")
@@ -5,7 +6,8 @@ const cors = require ("cors")
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
  const db = require('./database-mysql');
 // const db = require('./database-mongo');
-
+const jwt=require("jsonwebtoken");
+require('dotenv').config()
 const app = express();
 
 const PORT = process.env.PORT || 3000

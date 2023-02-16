@@ -5,6 +5,7 @@ import Items from '../itemsDisplay/items.jsx'
 import Navbar from '../Navbar/Navbar.jsx'
 import Slider from '../Slider/Slider.jsx'
 import data from '../../dummyData'
+import {Link} from 'react-router-dom'
 function HomePage() {
   
         const [Data,setData]=useState(data)
@@ -40,6 +41,9 @@ function HomePage() {
     <Sidebar filterCategories={filterCategories} />
       {view ==='home' &&  <Items selectItem={selectItem} Data={Data} />}
       {view ==='oneItem' && <OneItemDisplay item={item} />}
+      <Link to="/SignUp"><button onClick={()=>{
+
+      }}>Click meeeeeeeeeeeeeeeeeeee</button></Link>
     </div>
 
     

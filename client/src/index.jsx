@@ -5,9 +5,7 @@ import {
   createHashRouter,
   RouterProvider,
 } from "react-router-dom";
-import SingUp from './components/SingUp/SingUp.jsx';
 import HomePage from './components/HomePage/HomePage.jsx';
-
 // const App = () => {
 //   const [Data,setData]=useState(data)
 //    console.log(Data);
@@ -42,9 +40,13 @@ import HomePage from './components/HomePage/HomePage.jsx';
 //     </div>
 //   )
 // }
-
+import SignUp from './components/SingUp/SingUp.jsx'
 const router=createHashRouter([{
   path:'/',
   element:<HomePage/>
+  },
+  { 
+    path:"/SignUp",
+    element:<SignUp/>
 }])
 ReactDOM.render(<RouterProvider router={router}/>, document.getElementById('app'))
