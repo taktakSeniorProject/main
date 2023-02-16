@@ -5,23 +5,12 @@ db.connect((err) => {
     if (err) console.log(err);
     else console.log("db is working");
   });
-const PostRating=(req,res)=>{
-  try{
-    const {revRating}=req.body
-    const {idUser}=req.params
-    const quer=(`INSERT INTO review (revRating,user_user_id) VALUES(${revRating},${idUser})`)
-    db.promise().query(quer)
-    res.send('rating added')
-  }catch(err){
-    console.log(err);
-  }
-    }
 
-    const PostComment=(req,res)=>{
+    const POstReview=(req,res)=>{
       try{
-      const {comments}=req.body
+      const {comment,revRating}=req.body
       const {idUser}=req.params
-     const quer=(`INSERT INTO review (comments,user_user_id) VALUES ("${comments}",${idUser})`)
+     const quer=(`INSERT INTO review (revRating,comment,user_user_id) VALUES ("${revRating}","${comment}",${idUser})`)
      db.promise().query(quer)
      res.send('comment added')
     }catch(err){
@@ -31,7 +20,7 @@ const PostRating=(req,res)=>{
     const getComments =(req,res)=>{
       try{
 const {iduser}=req.params
-const quer=(`SELECT  comments FROM review WHERE  user_user_id=${iduser} `)
+const quer=(`SELECT  comment FROM review WHERE  user_user_id=${iduser} `)
 db.promise().query(quer)
 res.send('comment getted')
 }catch(err){
@@ -39,7 +28,7 @@ res.send('comment getted')
 }
       }
 
-      const getReview =(req,res)=>{
+  const getReview =(req,res)=>{
         try{
   const {iduser}=req.params
   const quer=(`SELECT  revRating FROM review WHERE  user_user_id=${iduser} `)
@@ -51,4 +40,4 @@ res.send('comment getted')
         }
   
  
-  module.exports = {getReview,getComments,PostComment,PostRating};
+  module.exports = {getReview,getComments,POstReview};
