@@ -2,8 +2,9 @@ import React from 'react';
 import { useState,useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 function Slider ({data}){
+  console.log(data);
     const [index, setIndex] = useState(0);
-    const {title,price,img}=data[index]
+    const {title,price,img}=data[0]
     const nextSlide = () => {
         setIndex((oldIndex) => {
           const result = (oldIndex + 1) % data.length;

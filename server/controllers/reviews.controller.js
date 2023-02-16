@@ -5,13 +5,39 @@ db.connect((err) => {
     if (err) console.log(err);
     else console.log("db is working");
   });
-const PostReview=(req,res)=>{
-    const {revRating,comments}=req.body
-    const {idUser,idItem}=req.params
-    db.query('INSERT INTO review (revRating,comments,items_id,user_user_id) VALUES(?,?,?,?) WHERE items_id=?  AND user_user_id=?',[revRating,comments,idItem,idUser]) 
-    if(error){
-      console.log(error);
+
+    const POstReview=(req,res)=>{
+      try{
+      const {comment,revRating}=req.body
+      const {idUser}=req.params
+     const quer=(`INSERT INTO review (revRating,comment,user_user_id) VALUES ("${revRating}","${comment}",${idUser})`)
+     db.promise().query(quer)
+     res.send('comment added')
+    }catch(err){
+      console.log(err);
     }
     }
-  module.exports = { PostReview};
+    const getComments =(req,res)=>{
+      try{
+const {iduser}=req.params
+const quer=(`SELECT  comment FROM review WHERE  user_user_id=${iduser} `)
+db.promise().query(quer)
+res.send('comment getted')
+}catch(err){
+ console.log(err);
+}
+      }
+
+  const getReview =(req,res)=>{
+        try{
+  const {iduser}=req.params
+  const quer=(`SELECT  revRating FROM review WHERE  user_user_id=${iduser} `)
+  db.promise().query(quer)
+  res.send('Review getted')
+  }catch(err){
+   console.log(err);
+  }
+        }
   
+ 
+  module.exports = {getReview,getComments,POstReview};

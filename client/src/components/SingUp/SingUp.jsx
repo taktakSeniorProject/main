@@ -6,9 +6,12 @@ import {
   PhoneOutlined,
   LockOutlined,
 } from "@ant-design/icons";
+const bcrypt=require("bcryptjs");
 import axios from "axios";
 function SingUp() {
   const [verif, setverif] = useState(false);
+  const [username, setUsername] = useState(false);
+  const [emal, setemail] = useState(false);
   let fullname = "";
   let email = "";
   let phone = "";
@@ -20,7 +23,7 @@ function SingUp() {
         .post("http://localhost:3000/api/user/addUser", {
           username: fullname,
           email: email,
-          password: password,
+          password: bcrypt.hashSync(password),
           phoneN: phone,
         })
         .then((response) => console.log(response));
@@ -38,6 +41,21 @@ function SingUp() {
           fullname = e.target.value;
         }}
       />
+      {username && (
+        <>
+          {" "}
+          <Space
+            direction="vertical"
+            style={{
+              width: "100%",
+            }}
+          ></Space>
+          <Alert
+            message="Password and Confirm Password do not match Text"
+            type="error"
+          />
+        </>
+      )}
       <Input
         type="text"
         placeholder="Email"
