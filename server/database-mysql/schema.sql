@@ -34,24 +34,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `ecommerce`.`wishlists`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `ecommerce`.`wishlists` (
-  `wishlist_id` INT NOT NULL AUTO_INCREMENT,
-  `user_user_id` INT NOT NULL,
-  PRIMARY KEY (`wishlist_id`),
-  INDEX `fk_wishlists_user1_idx` (`user_user_id` ASC) VISIBLE,
-  CONSTRAINT `fk_wishlists_user1`
-    FOREIGN KEY (`user_user_id`)
-    REFERENCES `ecommerce`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
 -- Table `ecommerce`.`items`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ecommerce`.`items` (
@@ -62,18 +44,11 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`items` (
   `gategorie` VARCHAR(45) NOT NULL,
   `img` VARCHAR(255) NOT NULL,
   `user_user_id` INT NOT NULL,
-  `wishlists_wishlist_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_items_user1_idx` (`user_user_id` ASC) VISIBLE,
-  INDEX `fk_items_wishlists1_idx` (`wishlists_wishlist_id` ASC) VISIBLE,
   CONSTRAINT `fk_items_user1`
     FOREIGN KEY (`user_user_id`)
     REFERENCES `ecommerce`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_items_wishlists1`
-    FOREIGN KEY (`wishlists_wishlist_id`)
-    REFERENCES `ecommerce`.`wishlists` (`wishlist_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -97,6 +72,30 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`review` (
     REFERENCES `ecommerce`.`user` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `ecommerce`.`wishlists`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ecommerce`.`wishlists` (
+  `user_user_id` INT NOT NULL,
+  `item_id` INT NOT NULL,
+  INDEX `fk_wishlists_user1_idx` (`user_user_id` ASC) VISIBLE,
+  PRIMARY KEY (`user_user_id`, `item_id`),
+  INDEX `fk_item_idx` (`item_id` ASC) VISIBLE,
+  CONSTRAINT `fk_wishlists_user1`
+    FOREIGN KEY (`user_user_id`)
+    REFERENCES `ecommerce`.`user` (`user_id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_item`
+    FOREIGN KEY (`item_id`)
+    REFERENCES `ecommerce`.`items` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
