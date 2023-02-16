@@ -4,13 +4,15 @@ import axios from 'axios';
 const bcrypt=require("bcryptjs");
 function Login() {
   const [test, settest] = useState(false)
+  const [emailTest, setemail] = useState(true)
+  const [passwordTest, setpassword] = useState(true)
   let password=""
   let email=""
   const verif=(email, password)=>{
-    axios.get(`http://localhost:3000/api/user/getUser/${email}/${bcrypt.hashSync(password)}`).then((res)=>{
-      console.log(res)
-      
-      if(res.data.length===0){
+    axios.get(`http://localhost:3000/api/user/getUser/${email}`).then((res)=>{
+      console.log(res.data)
+
+      if(res.data.length===0 || !bcrypt.compare(password, res.data[0].password)){
         settest(!test)
         
       }else{
@@ -48,10 +50,29 @@ function Login() {
         },
       ]}
     >
-      <Input id='email' onChange={(e)=>{
+      <Input onChange={(e)=>{
         email=e.target.value
+        if(email.indexOf("@")!==-1 && email.indexOf("gmail.com")!==-1){
+          setemail(false)
+
+        }
+        else{
+          setemail(true)
+        }
       }} />
-      <span id='error1'></span>
+      {emailTest && <>
+        <Space
+          direction="vertical"
+          style={{
+            width: "100%",
+          }}
+        ></Space>
+        <Alert
+          message="email are invalid"
+          type="error"
+        />
+    </>
+      }
     </Form.Item>
 
     <Form.Item
@@ -64,8 +85,13 @@ function Login() {
         },
       ]}
     >
-      <Input.Password id='password' onChange={(e)=>{
-        password=e.target.value 
+      <Input.Password  onChange={(e)=>{
+        password=e.target.value
+        if(password.length>4){
+          setpassword(false)
+        }else{
+          setpassword(true)
+        } 
       }}/>
       <span id='error2'></span>
     </Form.Item>
@@ -77,7 +103,21 @@ function Login() {
         offset: 8,
         span: 16,
       }}
-    > {test && <>
+    >
+      {passwordTest && <>
+        <Space
+          direction="vertical"
+          style={{
+            width: "100%",
+          }}
+        ></Space>
+        <Alert
+          message="password is to  short"
+          type="error"
+        />
+    </>
+      }
+       {test && <>
       <Space
           direction="vertical"
           style={{
@@ -101,7 +141,7 @@ function Login() {
       <Button type="primary"  onClick={(e)=>{
         e.preventDefault()
         verif(email,password)
-
+        console.log()
       }}>
         Submit
       </Button>
