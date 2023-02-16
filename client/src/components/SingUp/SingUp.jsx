@@ -66,12 +66,12 @@ function SingUp() {
         placeholder="Email"
         prefix={<MailOutlined />}
         onChange={(e) => {
-          email = e.target.value;
-          if(email.indexOf("@")!==-1 && email.indexOf("gmail.com")!==-1) setemail(false)
+          email = e.target.value;   
+         if (email.indexOf("@")!==-1 && email.indexOf("gmail.com")!==-1) setemail(false)
            else setemail(true)
           
         }}
-      />
+      />  
       {emal && <>
         <Space
           direction="vertical"
@@ -91,9 +91,12 @@ function SingUp() {
         prefix={<PhoneOutlined />}
         onChange={(e) => {
           phone = e.target.value;
-          if(phone.length !== 8) setPhone(false)
+          if(!phone.length ){
+            return setPhone(true)
+          }
+         else if (phone.length !== 8) setPhone(false)
           else {setPhone(true) }
-        }}
+      }}
       />
       {!phoneN && <>
         <Space
