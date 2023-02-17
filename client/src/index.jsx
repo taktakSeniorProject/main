@@ -41,6 +41,7 @@ import HomePage from './components/HomePage/HomePage.jsx';
 //   )
 // }
 import SignUp from './components/SingUp/SingUp.jsx'
+import Login from './components/Login/Login.jsx'
 const router=createHashRouter([{
   path:'/',
   element:<HomePage/>
@@ -48,5 +49,10 @@ const router=createHashRouter([{
   { 
     path:"/SignUp",
     element:<SignUp/>
-}])
+},
+{
+  path:"/Login",
+  element:<Login/>
+}
+])
 ReactDOM.render(<RouterProvider router={router}/>, document.getElementById('app'))

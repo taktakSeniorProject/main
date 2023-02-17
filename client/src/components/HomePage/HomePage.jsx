@@ -44,6 +44,9 @@ function HomePage() {
       <Link to="/SignUp"><button onClick={()=>{
 
       }}>Click meeeeeeeeeeeeeeeeeeee</button></Link>
+      <Link to="/Login"><button onClick={()=>{
+
+}}>Click meeeeeeeeeeeeeeeeeeee to logIN</button></Link>
     </div>
 
     

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Input, Alert, Space } from "antd";
 import {
   UserOutlined,
@@ -14,12 +14,13 @@ function SingUp() {
   const [emal, setemail] = useState(true);
   const [passworde, setPassword] = useState(true);
   const [phoneN, setPhone]=useState(true);
-  let fullname = "";
-  let email = "";
-  let phone = "";
-  let password = "";
-  let confirmPassword = "";
-
+    let fullname = "";
+    let email = "";
+    let phone = "";
+    let password = "";
+    let confirmPassword = "";
+ 
+console.log(fullname,email,phone,password,phone)
   const add = (fullname, email, phone, password) => {
     try {
       axios
@@ -29,7 +30,7 @@ function SingUp() {
           password: bcrypt.hashSync(password),
           phoneN: phone,
         })
-        .then((response) => console.log(response));
+        .then((response) => {console.log(response), localStorage.clear(),localStorage.setItem('access_token', response.data.accessToken)});
     } catch (error) {
       console.log(error);
     }
@@ -42,9 +43,9 @@ function SingUp() {
         prefix={<UserOutlined />}
         onChange={(e) => {
           fullname = e.target.value;
-          if(fullname.length===0) setUsername()
-          else setUsername(true)
-        }}
+        //   if(fullname.length===0) setUsername(false)
+        //   else setUsername(true)
+         }}
       />
       {!username && (
         <>
@@ -67,8 +68,8 @@ function SingUp() {
         prefix={<MailOutlined />}
         onChange={(e) => {
           email = e.target.value;   
-         if (email.indexOf("@")!==-1 && email.indexOf("gmail.com")!==-1) setemail(false)
-           else setemail(true)
+        //  if (email.indexOf("@")!==-1 && email.indexOf("gmail.com")!==-1) setemail(false)
+        //    else setemail(true)
           
         }}
       />  
@@ -91,11 +92,11 @@ function SingUp() {
         prefix={<PhoneOutlined />}
         onChange={(e) => {
           phone = e.target.value;
-          if(!phone.length ){
-            return setPhone(true)
-          }
-         else if (phone.length !== 8) setPhone(false)
-          else {setPhone(true) }
+        //   if(!phone.length ){
+        //      setPhone(true)
+        //   }
+        //  else if (phone.length !== 8) setPhone(false)
+        //   else {setPhone(true) }
       }}
       />
       {!phoneN && <>
@@ -146,7 +147,7 @@ function SingUp() {
       <Button
         type="primary"
         onClick={() => {
-          if (password !== confirmPassword && username && emal && passworde && phoneN) {
+          if (password !== confirmPassword ) {
             setverif(!verif);
           } else {
             console.log(fullname, email, phone, password);

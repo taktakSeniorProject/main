@@ -12,10 +12,10 @@ db.connect((err) => {
 
   const getOne= (req,res)=>{
     try {
-      
-      const {email}=req.params
-      const quer=`SELECT * from user WHERE email="${email}"`
-      db.promise().query(quer).then((result)=>res.json(result[0]))
+      // const {email}=req.params
+      // const quer=`SELECT * from user WHERE email="${email}"`
+      // db.promise().query(quer).then((result)=>res.json(result[0]))
+      res.json(req.user)
     } catch (error) {
       console.log(error);
     }
@@ -24,6 +24,10 @@ const addOne= (req,res)=>{
     try {
         console.log(process.env.ACCESS_TOKEN_SECRET)
         const {username , email , password , phoneN }=req.body;
+        console.log(username,email,password,phoneN)
+        const quer=`INSERT INTO user(username,email,password,phoneN) VALUES ("${username}","${email}","${password}","${phoneN}")`
+       db.promise().query(quer)
+      
         const user={
           username:username,
           email:email,
@@ -32,8 +36,6 @@ const addOne= (req,res)=>{
         }
         console.log(user);
        const accessToken= jwt.sign({email:user.email,password:user.password},process.env.ACCESS_TOKEN_SECRET)
-      const quer=`INSERT INTO user(username,email,password,phoneN) VALUES ("${username}","${email}","${password}","${phoneN}")`
-       db.promise().query(quer)
        res.json({accessToken:accessToken})
     } catch (error) {
       console.log(error);
