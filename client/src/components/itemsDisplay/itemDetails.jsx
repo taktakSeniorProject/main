@@ -1,14 +1,29 @@
+import { Link,useNavigate } from "react-router-dom";
 import React from "react";
-function ItemDetailds({title,description,quantity,price,review_rev_id,gategorie,img}){
-    return(
-        <>
-        <h1>{title}</h1>
+function ItemDetails({ title, description, quantity, price, category, img,id }) {
+    const navigate=useNavigate()
+    return (
+      <>
+        <h1 onClick={()=>{
+            navigate(`/items/${id}`,{
+                state:{
+                    title:title,
+                    description:description,
+                    quantity:quantity,
+                    price:price,
+                    category:category,
+                    img:img,
+                    id:id
+                }
+            })
+        }}>{title}</h1>
         <h1>{description}</h1>
-        <img className="image" src={img} />
+        <img className="image" src={img} alt={title} />
         <h1>{quantity}</h1>
         <h1>{price}</h1>
-        <h1>{gategorie}</h1>
-        </>
+        <h1>{category}</h1>
+      </>
     )
-}
-export default ItemDetailds
+  }
+  
+  export default ItemDetails;

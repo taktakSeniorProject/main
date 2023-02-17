@@ -59,7 +59,7 @@ db.connect((err) => {
   const {user_id}=req.params
   try {
     const query5 = `SELECT * from user WHERE user_id=${user_id}`
-    return db.promise().query(query5)
+     db.promise().query(query5)
     .then((result)=>res.json(result))
   } catch (error) {
     console.log(error);
