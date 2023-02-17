@@ -28,4 +28,5 @@ function UploadImg() {
   )
 }
 
+
 export default UploadImg

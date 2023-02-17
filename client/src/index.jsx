@@ -1,100 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import ReactDOM from 'react-dom'
-import axios from 'axios'
-<<<<<<< HEAD
-import Sidebar from './components/Sidebar/Sidebar.jsx'
-import Search from './components/Search/Search.jsx'
-import Items from './components/itemsDisplay/items.jsx'
-import Navbar from './components/Navbar/Navbar.jsx'
-import SingUp from './components/SingUp/SingUp.jsx'
-import Login from './components/Login/Login.jsx'
-import Slider from './components/Slider/Slider.jsx'
-
-
-const App = () => {
-  const [data,setData]=useState([])
-  console.log(data);
-  useEffect(()=>{
-    axios.get('http://localhost:3000/api/item')
-    .then(res=>{
-      console.log(res.data);
-      setData(res.data)
-    })
-    .catch(error=>{
-      throw error
-    })
-  },[])
-  const filterCategories=(category)=>{
-    const newItems=data.filter((item)=>(item.gategorie)===category)
-    setData(newItems)
-  }
-  let filterItems = (namee)=>{
-    const newItems= data.filter(item=>(item.title.toLowerCase()).includes(namee.toLowerCase()))
-     setData(newItems)
-   }
-  return (
-    <div>
-    <Navbar  />
-    <Search filterItems={filterItems} />
-    {data && <Slider data={data}  />} 
-    <Search filterItems={filterItems} />
-    <Sidebar filterCategories={filterCategories} />
-    <SingUp/>
-      <Login/>
-    <Items data={data} />
-    </div>
-  )
-}
-
-ReactDOM.render(<App />, document.getElementById('app'))
-=======
+import React from 'react';
+import ReactDOM from 'react-dom';
 import {
   createHashRouter,
-  RouterProvider,
-} from "react-router-dom";
+  RouterProvider,} from "react-router-dom";
+// import { RouterProvider } from "react-router-dom";
 import HomePage from './components/HomePage/HomePage.jsx';
-// const App = () => {
-//   const [Data,setData]=useState(data)
-//    console.log(Data);
-//   // useEffect(()=>{
-//   //   axios.get('http://localhost:3000/api/user/HomePage')
-//   //   .then(res=>{
-//   //     setData(res.data)
-//   //   })
-//   //   .catch(error=>{
-//   //     throw error
-//   //   })
-//   // },[])
-//   const filterCategories=(category)=>{
-//     const newItems=data.filter((item)=>(item.gategorie)===category)
-//     setData(newItems)
-//   }
-//   let filterItems = (namee)=>{
-//     const newItems= data.filter(item=>(item.title.toLowerCase()).includes(namee.toLowerCase()))
-//      setData(newItems)
-//    }
-//   return (
-//     <div>
-//     <Navbar  />
-//     <Search filterItems={filterItems} />
-//     <Slider data={data}  />
-//     <Search filterItems={filterItems} />
-//     <Sidebar filterCategories={filterCategories} />
-//     <SingUp/>
-//       <Login/>
-//     <Items Data={Data} />
-//     <UploadImg/>
-//     </div>
-//   )
-// }
-import SignUp from './components/SingUp/SingUp.jsx'
+import SignUp from './components/SingUp/SingUp.jsx';
+import OneItemDisplay from './components/itemsDisplay/OneItemDisplay.jsx';
+import Login from './components/logIn/Login.jsx'
+
 const router=createHashRouter([{
   path:'/',
   element:<HomePage/>
   },
-  { 
+  {
     path:"/SignUp",
     element:<SignUp/>
-}])
+},
+{
+  path:"/Login",
+  element:<Login/>
+},{
+  path:"/items/:itemId",
+  element:<OneItemDisplay />
+}
+])
 ReactDOM.render(<RouterProvider router={router}/>, document.getElementById('app'))
->>>>>>> 27a0b11fef04f701b54485d14cdbb8f939912dad
