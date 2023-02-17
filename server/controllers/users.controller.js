@@ -1,3 +1,4 @@
+// DELETE THIS LINE
 const connection=require("../database-mysql/index")
 const jwt=require("jsonwebtoken");
 const dot=require('dotenv')
@@ -59,16 +60,4 @@ const addImguser=(req,res)=>{
     console.log(error);
   }
 }
-const modifyUser=(req,res)=>{
-  try {
-    console.log(req.body)
-    const {id}=req.params
-    const {username, email, phoneN }=req.body;
-    const quer=`UPDATE user SET username="${username}",email="${email}",phoneN="${phoneN}" where user_id= ${id}`
-    db.promise().query(quer)
-    res.send("added")
-  } catch (error) {
-    console.log(error);
-  }
-}
-module.exports = {getOne ,addOne,selectAll,addImguser,modifyUser};
+module.exports = {getOne ,addOne,selectAll,addImguser};
