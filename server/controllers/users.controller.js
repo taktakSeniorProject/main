@@ -33,7 +33,7 @@ const addOne= (req,res)=>{
           phoneN:phoneN,
         }
         console.log(user);
-       const accessToken= jwt.sign({email:user.email,password:user.password},process.env.ACCESS_TOKEN_SECRET)
+       const accessToken= jwt.sign({email:user.email,password:user.password,username:user.username},process.env.ACCESS_TOKEN_SECRET,{expiresIn:"1H"})
        res.json({accessToken:accessToken})
     } catch (error) {
       console.log(error);
