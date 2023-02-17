@@ -19,4 +19,5 @@ router.post("/addUser", userController.addOne);
 router.put("/updateUser/:id",userController.addImguser);
 router.post("/getAll",userController.selectAll)
 router.put('/mofifyUser/:id',userController.modifyUser)
+router.get('/getUserId/:email',userController.getUserId)
 module.exports = router;

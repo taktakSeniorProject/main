@@ -1,4 +1,3 @@
-// DELETE THIS LINE
 const connection=require("../database-mysql/index")
 const jwt=require("jsonwebtoken");
 const dot=require('dotenv')
@@ -27,7 +26,6 @@ const addOne= (req,res)=>{
         console.log(username,email,password,phoneN)
         const quer=`INSERT INTO user(username,email,password,phoneN) VALUES ("${username}","${email}","${password}","${phoneN}")`
        db.promise().query(quer)
-      
         const user={
           username:username,
           email:email,
@@ -74,4 +72,13 @@ const modifyUser=(req,res)=>{
     console.log(error);
   }
 }
-module.exports = {getOne ,addOne,selectAll,addImguser,modifyUser};
+const getUserId=(req,res)=>{
+  try {
+    const {email}=req.params
+    const quer=`SELECT * from user WHERE email="${email}"`
+    db.promise().query(quer).then((result)=>res.json(result[0]))
+  } catch (error) {
+    console.log(error)
+  }
+}
+module.exports = {getOne ,addOne,selectAll,addImguser,modifyUser,getUserId};
