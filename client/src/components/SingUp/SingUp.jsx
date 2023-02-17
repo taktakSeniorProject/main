@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Input, Alert, Space } from "antd";
 import {
   UserOutlined,
@@ -6,18 +6,21 @@ import {
   PhoneOutlined,
   LockOutlined,
 } from "@ant-design/icons";
-const bcrypt = require("bcryptjs");
+const bcrypt=require("bcryptjs");
 import axios from "axios";
 function SingUp() {
   const [verif, setverif] = useState(false);
-  const [username, setUsername] = useState(false);
-  const [emal, setemail] = useState(false);
-  let fullname = "";
-  let email = "";
-  let phone = "";
-  let password = "";
-  let confirmPassword = "";
-
+  const [username, setUsername] = useState(true);
+  const [emal, setemail] = useState(true);
+  const [passworde, setPassword] = useState(true);
+  const [phoneN, setPhone]=useState(true);
+    let fullname = "";
+    let email = "";
+    let phone = "";
+    let password = "";
+    let confirmPassword = "";
+ 
+console.log(fullname,email,phone,password,phone)
   const add = (fullname, email, phone, password) => {
     try {
       axios
@@ -27,7 +30,7 @@ function SingUp() {
           password: bcrypt.hashSync(password),
           phoneN: phone,
         })
-        .then((response) => console.log(response));
+        .then((response) => {console.log(response), localStorage.clear(),localStorage.setItem('access_token', response.data.accessToken)});
     } catch (error) {
       console.log(error);
     }
@@ -40,11 +43,11 @@ function SingUp() {
         prefix={<UserOutlined />}
         onChange={(e) => {
           fullname = e.target.value;
-          if (fullname.length === 0) setUsername();
-          else setUsername(true);
-        }}
+        //   if(fullname.length===0) setUsername(false)
+        //   else setUsername(true)
+         }}
       />
-      {username && (
+      {!username && (
         <>
           {" "}
           <Space
@@ -54,7 +57,7 @@ function SingUp() {
             }}
           ></Space>
           <Alert
-            message="Password and Confirm Password do not match Text"
+            message="username is required"
             type="error"
           />
         </>
@@ -64,48 +67,51 @@ function SingUp() {
         placeholder="Email"
         prefix={<MailOutlined />}
         onChange={(e) => {
-          email = e.target.value;
-          if (email.indexOf("@") !== -1 && email.indexOf("gmail.com") !== -1)
-            setemail(false);
-          else setemail(true);
+          email = e.target.value;   
+        //  if (email.indexOf("@")!==-1 && email.indexOf("gmail.com")!==-1) setemail(false)
+        //    else setemail(true)
+          
         }}
-      />
-      {emal && (
-        <>
-          <Space
-            direction="vertical"
-            style={{
-              width: "100%",
-            }}
-          ></Space>
-          <Alert message="email are invalid" type="error" />
-        </>
-      )}
+      />  
+      {emal && <>
+        <Space
+          direction="vertical"
+          style={{
+            width: "100%",
+          }}
+        ></Space>
+        <Alert
+          message="email are invalid"
+          type="error"
+        />
+    </>
+      }
       <Input
         type="text"
         placeholder="Phone Number"
         prefix={<PhoneOutlined />}
         onChange={(e) => {
           phone = e.target.value;
-          if (!phone.length) {
-            return setPhone(true);
-          } else if (phone.length !== 8) setPhone(false);
-          else {
-            setPhone(true);
-          }
-        }}
+        //   if(!phone.length ){
+        //      setPhone(true)
+        //   }
+        //  else if (phone.length !== 8) setPhone(false)
+        //   else {setPhone(true) }
+      }}
       />
-      {!phoneN && (
-        <>
-          <Space
-            direction="vertical"
-            style={{
-              width: "100%",
-            }}
-          ></Space>
-          <Alert message="phone number need to be 8 numbers" type="error" />
-        </>
-      )}
+      {!phoneN && <>
+        <Space
+          direction="vertical"
+          style={{
+            width: "100%",
+          }}
+        ></Space>
+        <Alert
+          message="phone number need to be 8 numbers"
+          type="error"
+        />
+    </>
+      }
       <Input
         type="password"
         placeholder="Password"
@@ -141,13 +147,7 @@ function SingUp() {
       <Button
         type="primary"
         onClick={() => {
-          if (
-            password !== confirmPassword &&
-            username &&
-            emal &&
-            passworde &&
-            phoneN
-          ) {
+          if (password !== confirmPassword ) {
             setverif(!verif);
           } else {
             console.log(fullname, email, phone, password);
