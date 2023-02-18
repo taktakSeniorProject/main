@@ -11,6 +11,7 @@ import HomePage from './components/HomePage/HomePage.jsx';
 import SignUp from './components/SingUp/SingUp.jsx';
 import OneItemDisplay from './components/itemsDisplay/OneItemDisplay.jsx';
 import Login from './components/logIn/Login.jsx'
+import UploadImg from './components/cloudD/UploadImg.jsx';
 const router=createHashRouter([{
   path:'/',
   element:<HomePage/>
@@ -25,6 +26,10 @@ const router=createHashRouter([{
 },{
   path:"/items/:itemId",
   element: <OneItemDisplay/>
-}
+},
+{
+  path:"/ImgUpload",
+  element: <UploadImg/>
+},
 ])
 ReactDOM.render(<RouterProvider router={router}/>, document.getElementById('app'))

@@ -2,6 +2,7 @@ const router = require('express').Router();
 const userController = require("../controllers/users.controller");
 const jwt=require("jsonwebtoken");
 const dot=require('dotenv')
+const cookieParser = require('cookie-parser');
 dot.config()
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
@@ -14,6 +15,7 @@ function authenticateToken(req, res, next) {
       next()
     })
 }
+router.use(cookieParser())
 router.get("/getUser/",authenticateToken,userController.getOne);
 router.post("/addUser", userController.addOne);
 router.put("/updateUser/:id",userController.addImguser);

@@ -1,25 +1,36 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect,} from 'react'
 import Sidebar from '../Sidebar/Sidebar.jsx'
 import Search from '../Search/Search.jsx'
 import Items from '../itemsDisplay/items.jsx'
 import Navbar from '../Navbar/Navbar.jsx'
 import Slider from '../Slider/Slider.jsx'
 import data from '../../dummyData'
-import {Link} from 'react-router-dom'
+import axios from 'axios'
+import { Link,useNavigate } from 'react-router-dom'
 function HomePage() {
   
-        const [Data,setData]=useState(data)
+  const [Data,setData]=useState(data)
   const [view,setView]=useState('home')
   const [item,setItem]=useState({})
-  // useEffect(()=>{
-  //   axios.get('http://localhost:3000/api/user/HomePage')
-  //   .then(res=>{
-  //     setData(res.data)
-  //   })
-  //   .catch(error=>{
-  //     throw error
-  //   })
-  // },[])
+  const[theUser,setTheUser]=useState([])
+  useEffect(()=>{
+    if(localStorage.length>1){
+    let email=JSON.parse(localStorage.user)
+    axios.get(`http://localhost:3000/api/user/getUserId/${email.email}`)
+    .then(res=>{
+      console.log(res.data)
+      setTheUser(res.data)
+    })
+    .catch(error=>{
+      throw error
+    })
+  }
+  else {
+    <Link to='/Login'></Link>
+  }
+  },[])
+  const navigate=useNavigate()
+  
   const filterCategories=(category)=>{
     const newItems=data.filter((item)=>(item.gategorie)===category)
     setData(newItems)
@@ -41,13 +52,15 @@ function HomePage() {
     <Sidebar filterCategories={filterCategories} />
       {view ==='home' &&  <Items selectItem={selectItem} Data={Data} />}
       {view ==='oneItem' && <OneItemDisplay item={item} />}
-      <Link to="/SignUp"><button onClick={()=>{
-
-      }}>Click meeeeeeeeeeeeeeeeeeee</button></Link>
-      <Link to="/Login"><button onClick={()=>{
-
-}}>Click meeeeeeeeeeeeeeeeeeee to logIN</button></Link>
+      <button onClick={()=>{
+navigate("/ImgUpload",{
+  state:{
+    theUser:theUser,
+  }
+  
+      })}}>update my img</button>
     </div>
+    
 
     
   )
