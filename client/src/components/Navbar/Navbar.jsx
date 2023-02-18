@@ -81,18 +81,20 @@ const Navbar = () => {
             src="https://media.tenor.com/OXua4v7_uSkAAAAC/profile-picture.gif"
             className="profilepic"
             onClick={() => {
-              return <UserIcon />;
+              
             }}
           />
         )}
+        <Link to='/Login'>
         <Button
-          onClick={() => {
-            localStorage.clear();
-            window.location.reload();
+          onClick={() => {  
+            localStorage.removeItem("user");
           }}
         >
+
           LogOut
         </Button>
+        </Link>
       </div>
     </nav>
   );
