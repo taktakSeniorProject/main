@@ -2,6 +2,7 @@ import { Link,useNavigate } from "react-router-dom";
 import React from "react";
 function ItemDetails({ title, description, quantity, price, category, img,id }) {
     const navigate=useNavigate()
+    console.log(img,'from item details')
     return (
       <>
         <h1 onClick={()=>{

@@ -4,7 +4,8 @@ import { links, social } from "./data";
 import { Link } from "react-router-dom";
 import { Button } from "antd";
 import UserIcon from "../userIcon/UserIcon.jsx";
-const Navbar = () => {
+const Navbar = ({ user }) => {
+  console.log(user, "from nav bar");
   const [showLinks, setShowLinks] = useState(false);
   const linksContainerRef = useRef(null);
   const [userHere, setUserhere] = useState(true);
@@ -77,23 +78,24 @@ const Navbar = () => {
         )}
 
         {userHere && (
-          <img
-            src="https://media.tenor.com/OXua4v7_uSkAAAAC/profile-picture.gif"
+          <Link to="/UserIcon"> <img
+            src={
+              user[0]
+                ? user[0].profile
+                : "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png?ssl=1"
+            }
             className="profilepic"
-            onClick={() => {
-              
-            }}
-          />
+            onClick={() => {}}
+          /></Link>
         )}
-        <Link to='/Login'>
-        <Button
-          onClick={() => {  
-            localStorage.removeItem("user");
-          }}
-        >
-
-          LogOut
-        </Button>
+        <Link to="/Login">
+          <Button
+            onClick={() => {
+              localStorage.removeItem("user");
+            }}
+          >
+            LogOut
+          </Button>
         </Link>
       </div>
     </nav>
