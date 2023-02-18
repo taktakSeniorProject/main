@@ -272,6 +272,7 @@ font-weight: 300;
   height: 50px;
 }
 /* SIDEBAR */
+<<<<<<< HEAD
 .img{
   width: 20px;
 }
@@ -335,3 +336,5 @@ font-weight: 300;
     transform: translateX(0);
   }
 }
+=======
+>>>>>>> 3ab537ad5c5dff17838de961ff961ed15bada824
