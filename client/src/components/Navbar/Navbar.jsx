@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaBars } from "react-icons/fa";
 import { links, social } from "./data";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import UserIcon from "../userIcon/UserIcon.jsx";
 const Navbar = ({ user }) => {
@@ -10,6 +10,8 @@ const Navbar = ({ user }) => {
   const linksContainerRef = useRef(null);
   const [userHere, setUserhere] = useState(true);
   const linksRef = useRef(null);
+  const [navig, setnavig] = useState(false)
+  const navigate = useNavigate();
   useEffect(() => {
     if (localStorage.length === 0) {
       setUserhere(false);
@@ -17,7 +19,13 @@ const Navbar = ({ user }) => {
       setUserhere(true);
     }
   }, [localStorage.length]);
-
+const navi=()=>{
+  navigate("/UserIcon",{
+    state: { 
+      user:user[0],
+    },
+  })
+}
   const toggleLinks = () => {
     setShowLinks(!showLinks);
   };
@@ -76,17 +84,21 @@ const Navbar = ({ user }) => {
             </Link>
           </>
         )}
-
         {userHere && (
-          <Link to="/UserIcon"> <img
+          <>
+          <h3>{user[0] ? user[0].username : "user"}</h3>
+          <img
             src={
               user[0]
                 ? user[0].profile
                 : "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png?ssl=1"
             }
             className="profilepic"
-            onClick={() => {}}
-          /></Link>
+            onClick={() => {
+              navi()
+            }}
+          />
+          </>
         )}
         <Link to="/Login">
           <Button

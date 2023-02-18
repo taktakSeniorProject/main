@@ -13,6 +13,7 @@ import OneItemDisplay from './components/itemsDisplay/OneItemDisplay.jsx';
 import Login from './components/logIn/Login.jsx'
 import UploadImg from './components/cloudD/UploadImg.jsx';
 import UserIcon from './components/userIcon/UserIcon.jsx'
+import Changeinfo from './change the info for the user/Changeinfo.jsx';
 const router=createHashRouter([{
   path:'/',
   element:<HomePage/>
@@ -33,8 +34,16 @@ const router=createHashRouter([{
   element: <UploadImg/>
 },
 {
+  path:"/ChangeUser",
+  element: <UploadImg/>
+},
+{
   path:"/UserIcon",
   element: <UserIcon/>
-}
+},
+{
+  path:"/changeInfo/:id",
+  element: <Changeinfo/>
+},
 ])
 ReactDOM.render(<RouterProvider router={router}/>, document.getElementById('app'))
