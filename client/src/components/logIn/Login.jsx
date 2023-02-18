@@ -1,32 +1,53 @@
-import React, { useState } from "react";
-import { Button, Checkbox, Form, Input, Alert, Space } from "antd";
-import axios from "axios";
-const bcrypt = require("bcryptjs");
-function Login() {
-  const [test, settest] = useState(false);
-  let password = "";
-  let email = "";
-  const verif = (email, password) => {
-    axios.get(`http://localhost:3000/api/user/getUser/${email}`).then((res) => {
-      console.log(res.data);
+import React, { useState } from 'react'
+import { Button, Checkbox, Form, Input , Alert, Space  } from 'antd';
 
-      if (
-        res.data.length === 0 ||
-        !bcrypt.compare(password, res.data[0].password)
-      ) {
-        settest(!test);
-      } else {
-        alert("msg");
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("user", JSON.stringify(res.data[0]));
-        window.location.href = "/";
-      }
-    });
+import axios from 'axios';
+const bcrypt=require("bcryptjs");
+
+function Login() {
+  const [form] = Form.useForm();
+  const [emailTest, setEmailTest] = useState(false);
+  const [passwordTest, setPasswordTest] = useState(false);
+  const [invalidCredentials, setInvalidCredentials] = useState(false);
+  
+  const validateEmail = (rule, value) => {
+    if (value && !/^\S+@\S+\.\S+$/.test(value)) {
+      return Promise.reject('Invalid email address');
+    } else {
+      return Promise.resolve();
+    }
   };
+
+  const validatePassword = (rule, value) => {
+    if (value && value.length < 5) {
+      return Promise.reject('Password is too short');
+    } else {
+      return Promise.resolve();
+    }
+  };
+
+  const handleSubmit = (values) => {
+
+    axios.get(`http://localhost:3000/api/user/getUser`, {headers: {"authorization": `Bearer ${localStorage.getItem('access_token')}`}})
+      .then((res) => {
+        console.log(res)
+        if (res.data.length === 0 || !bcrypt.compare(values.password, res.data.password)) {
+          setInvalidCredentials(true);
+        } else {
+          localStorage.setItem('user', JSON.stringify(res.data));
+          window.location.href = '/';
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   return (
     <div>
       <Form
-        name="basic"
+        form={form}
+        name="login"
         labelCol={{
           span: 8,
         }}
@@ -36,28 +57,22 @@ function Login() {
         style={{
           maxWidth: 600,
         }}
-        initialValues={{
-          remember: true,
-        }}
-        autoComplete="off"
+      
       >
         <Form.Item
-          label="email"
+          label="Email"
           name="email"
           rules={[
             {
               required: true,
-              message: "Please input your username!",
+              message: 'Please input your email',
             },
+            {
+              validator: validateEmail
+            }
           ]}
         >
-          <Input
-            id="email"
-            onChange={(e) => {
-              email = e.target.value;
-            }}
-          />
-          <span id="error1"></span>
+          <Input />
         </Form.Item>
 
         <Form.Item
@@ -66,17 +81,14 @@ function Login() {
           rules={[
             {
               required: true,
-              message: "Please input your password!",
+              message: 'Please input your password',
             },
+            {
+              validator: validatePassword
+            }
           ]}
         >
-          <Input.Password
-            id="password"
-            onChange={(e) => {
-              password = e.target.value;
-            }}
-          />
-          <span id="error2"></span>
+          <Input.Password />
         </Form.Item>
 
         <Form.Item
@@ -87,41 +99,44 @@ function Login() {
             span: 16,
           }}
         >
-          {" "}
-          {test && (
-            <>
-              <Space
-                direction="vertical"
-                style={{
-                  width: "100%",
-                }}
-              ></Space>
-              <Alert message="Password and email are invalid" type="error" />
-            </>
-          )}
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
 
-        <Form.Item
-          wrapperCol={{
-            offset: 8,
-            span: 16,
-          }}
-        >
-          <Button
-            type="primary"
-            onClick={(e) => {
-              e.preventDefault();
-              verif(email, password);
-              console.log();
-            }}
-          >
+        <Form.Item>
+          <Button type="primary" htmlType="submit" onClick={(e)=>{
+            handleSubmit(e);
+          }}>
             Submit
           </Button>
         </Form.Item>
+
+        {emailTest && (
+          <Alert
+            message="Invalid email address"
+            type="error"
+            showIcon
+          />
+        )}
+
+        {passwordTest && (
+          <Alert
+            message="Password is too short"
+            type="error"
+            showIcon
+          />
+        )}
+
+        {invalidCredentials && (
+          <Alert
+            message="Invalid email or password"
+            type="error"
+            showIcon
+          />
+        )}
       </Form>
     </div>
   );
 }
 
 export default Login;
+``

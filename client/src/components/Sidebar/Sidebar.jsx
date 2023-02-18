@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 import {BsReverseLayoutTextSidebarReverse} from 'react-icons/bs'
+// import { IoCarSportSharp } from 'react-icons/io';
+import {FaCarSide} from 'react-icons/fa'
+import {BsFillHouseDoorFill} from 'react-icons/bs'
+import {BsPhoneFill} from 'react-icons/bs'
+import {BiFootball} from 'react-icons/bi'
+import {FaTshirt} from 'react-icons/fa'
 function Sidebar ({filterCategories}){
     const [sideBar,setSideBar]=useState(false)
     const toggleSideBar=()=>{
@@ -9,11 +15,11 @@ function Sidebar ({filterCategories}){
         <div className="sidebarIcon" >
         <BsReverseLayoutTextSidebarReverse onClick={()=>toggleSideBar()}/>
         <div className={sideBar?"sideBar sideBar-open":"sideBar" }>
-<li onClick={()=>filterCategories('mecanic')}>mecanic</li>
-<li  onClick={()=>filterCategories('kids')}>kids</li>
-<li onClick={()=>filterCategories('love')}>love</li>
-<li onClick={()=>filterCategories('test')}>test</li>
-<li onClick={()=>filterCategories('wallah test')}>wallah test</li>
+<li onClick={()=>filterCategories('vehicles')}> <FaCarSide/>  vehicles</li>
+<li  onClick={()=>filterCategories('real estate')}><BsFillHouseDoorFill/>  real estate</li>
+<li onClick={()=>filterCategories('multimedia')}> <BsPhoneFill />multimedia</li>
+<li onClick={()=>filterCategories('hobbies')}> <BiFootball/> hobbies</li>
+<li onClick={()=>filterCategories('clothes')}> <FaTshirt/> clothes</li>
         </div>
         </div>
     )

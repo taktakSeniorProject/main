@@ -1,6 +1,6 @@
 const connection=require("../database-mysql/index")
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
-const db = require("../database-mysql");
+const db = require("../database-mysql").promise();;
 db.connect((err) => {
     if (err) console.log(err);
     else console.log("db is working");
@@ -10,30 +10,32 @@ db.connect((err) => {
       try{
       const {comment,revRating}=req.body
       const {idUser}=req.params
-     const quer=(`INSERT INTO review (revRating,comment,user_user_id) VALUES ("${revRating}","${comment}",${idUser})`)
-     db.promise().query(quer)
-     res.send('comment added')
+     const quer=(`INSERT INTO review (revRating,comments,user_user_id) VALUES ("${revRating}","${comment}","${idUser}")`)
+
+     db.query(quer).then(()=>{
+      res.json("comment added")
+     })
+
     }catch(err){
       console.log(err);
     }
     }
     const getComments =(req,res)=>{
-      try{
-const {iduser}=req.params
-const quer=(`SELECT  comment FROM review WHERE  user_user_id=${iduser} `)
-db.promise().query(quer)
-res.send('comment getted')
-}catch(err){
- console.log(err);
-}
+        const {iduser}=req.params
+
+const quer=(`SELECT comments FROM review WHERE user_user_id = "${iduser}"`)
+db.query(quer).then((result)=>{res.json(result[0])})
+
+.catch((err)=>console.log(err));
+
       }
 
   const getReview =(req,res)=>{
         try{
   const {iduser}=req.params
-  const quer=(`SELECT  revRating FROM review WHERE  user_user_id=${iduser} `)
-  db.promise().query(quer)
-  res.send('Review getted')
+  const quer=(`SELECT  revRating FROM review WHERE  user_user_id = "${iduser}" `)
+  db.query(quer).then((response)=>res.json(response[0]))
+  
   }catch(err){
    console.log(err);
   }
