@@ -2,6 +2,7 @@ const connection=require("../database-mysql/index")
 const jwt=require("jsonwebtoken");
 const dot=require('dotenv')
 dot.config()
+
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 const db = require("../database-mysql");
 db.connect((err) => {
@@ -11,10 +12,10 @@ db.connect((err) => {
 
   const getOne= (req,res)=>{
     try {
-      
-      const {email}=req.params
-      const quer=`SELECT * from user WHERE email="${email}"`
-      db.promise().query(quer).then((result)=>res.json(result[0]))
+      // const {email}=req.params
+      // const quer=`SELECT * from user WHERE email="${email}"`
+      // db.promise().query(quer).then((result)=>res.json(result[0]))
+      res.json(req.user)
     } catch (error) {
       console.log(error);
     }
@@ -23,6 +24,9 @@ const addOne= (req,res)=>{
     try {
         console.log(process.env.ACCESS_TOKEN_SECRET)
         const {username , email , password , phoneN }=req.body;
+        console.log(username,email,password,phoneN)
+        const quer=`INSERT INTO user(username,email,password,phoneN) VALUES ("${username}","${email}","${password}","${phoneN}")`
+       db.promise().query(quer)
         const user={
           username:username,
           email:email,
@@ -30,9 +34,8 @@ const addOne= (req,res)=>{
           phoneN:phoneN,
         }
         console.log(user);
-       const accessToken= jwt.sign({email:user.email,password:user.password},process.env.ACCESS_TOKEN_SECRET)
-      const quer=`INSERT INTO user(username,email,password,phoneN) VALUES ("${username}","${email}","${password}","${phoneN}")`
-       db.promise().query(quer)
+       const accessToken= jwt.sign({email:user.email,password:user.password,username:user.username},process.env.ACCESS_TOKEN_SECRET,{expiresIn:"1H"})
+       res.cookie("accessToken",accessToken)
        res.json({accessToken:accessToken})
     } catch (error) {
       console.log(error);
@@ -52,7 +55,7 @@ const addImguser=(req,res)=>{
     console.log(req.body)
     const {id}=req.params
     const {profile}=req.body;
-    const quer=`UPDATE user SET profile = "${profile}" where user_id= ${id}`
+    const quer=`UPDATE user SET profile = "${profile}" where user_id= "${id}"`
     db.promise().query(quer)
     res.send("added")
   } catch (error) {
@@ -71,4 +74,13 @@ const modifyUser=(req,res)=>{
     console.log(error);
   }
 }
-module.exports = {getOne ,addOne,selectAll,addImguser,modifyUser};
+const getUserId=(req,res)=>{
+  try {
+    const {email}=req.params
+    const quer=`SELECT * from user WHERE email="${email}"`
+    db.promise().query(quer).then((result)=>res.json(result[0]))
+  } catch (error) {
+    console.log(error)
+  }
+}
+module.exports = {getOne ,addOne,selectAll,addImguser,modifyUser,getUserId};
