@@ -15,7 +15,6 @@ db.connect((err) => {
      db.query(quer).then(()=>{
       res.json("comment added")
      })
-
     }catch(err){
       console.log(err);
     }

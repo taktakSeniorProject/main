@@ -3,5 +3,5 @@ const itemController = require("../controllers/item.controller");
 
 // router.get("/", itemController.selectAll)
 router.get('/',itemController.GetItemsToBuy)
-router.post('/')
+router.post("/addItem/:id",itemController.addItem)
 module.exports = router;

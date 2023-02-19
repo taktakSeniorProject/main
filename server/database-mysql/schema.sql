@@ -3,6 +3,9 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 -- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
 -- Schema ecommerce
 -- -----------------------------------------------------
 -- -----------------------------------------------------
@@ -24,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`user` (
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 32
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
@@ -36,17 +39,15 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`items` (
   `description` TEXT NOT NULL,
   `price` VARCHAR(25) NOT NULL,
   `gategorie` VARCHAR(45) NOT NULL,
-  `img` VARCHAR(255) NOT NULL,
+  `img` JSON NOT NULL,
   `user_user_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_items_user1_idx` (`user_user_id` ASC) VISIBLE,
   CONSTRAINT `fk_items_user1`
     FOREIGN KEY (`user_user_id`)
-    REFERENCES `ecommerce`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `ecommerce`.`user` (`user_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
@@ -61,10 +62,9 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`review` (
   INDEX `fk_review_user1_idx` (`user_user_id` ASC) VISIBLE,
   CONSTRAINT `fk_review_user1`
     FOREIGN KEY (`user_user_id`)
-    REFERENCES `ecommerce`.`user` (`user_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `ecommerce`.`user` (`user_id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
@@ -73,17 +73,17 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `ecommerce`.`wishlists` (
   `user_user_id` INT NOT NULL,
   `item_id` INT NOT NULL,
-  INDEX `fk_wishlists_user1_idx` (`user_user_id` ASC) VISIBLE,
   PRIMARY KEY (`user_user_id`, `item_id`),
+  INDEX `fk_wishlists_user1_idx` (`user_user_id` ASC) VISIBLE,
   INDEX `fk_item_idx` (`item_id` ASC) VISIBLE,
-  CONSTRAINT `fk_wishlists_user1`
-    FOREIGN KEY (`user_user_id`)
-    REFERENCES `ecommerce`.`user` (`user_id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
   CONSTRAINT `fk_item`
     FOREIGN KEY (`item_id`)
     REFERENCES `ecommerce`.`items` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_wishlists_user1`
+    FOREIGN KEY (`user_user_id`)
+    REFERENCES `ecommerce`.`user` (`user_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB

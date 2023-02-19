@@ -270,6 +270,7 @@ font-weight: 300;
 .profilepic{
   width: 50px;
   height: 50px;
+  border-radius: 50%;
 }
 /* SIDEBAR */
 .img{
@@ -400,6 +401,14 @@ margin-bottom: 100px;
   color: #E1D7C6;
 }
 
+.oneUserItems{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.itemImages{
+  width: 200px;
+  height: 200px;
+}
 .list{
   position: relative;
   margin-bottom: 150px;

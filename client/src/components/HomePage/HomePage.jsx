@@ -4,10 +4,10 @@ import Search from "../Search/Search.jsx";
 import Items from "../itemsDisplay/items.jsx";
 import Navbar from "../Navbar/Navbar.jsx";
 import Slider from "../Slider/Slider.jsx";
-import { Button } from "antd";
 import axios from "axios";
 import PriceFilter from "./PriceFlter.jsx";
-import { Link, useNavigate } from "react-router-dom";
+import UserIcon from "../UserIcon/UserIcon.jsx";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 function HomePage() {
   const [data, setData] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
@@ -32,6 +32,7 @@ function HomePage() {
     }
   }, []);
   const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/item")
@@ -58,12 +59,12 @@ function HomePage() {
   return (
     <div>
       <Slider data={data} />
-      <Navbar />
+      <Navbar user={theUser} />
       <Search filterItems={filterItems} />
       <Sidebar filterCategories={filterCategories} />
       <Items data={data} />
       {/* <OneItemDisplay item={item} /> */}
-      <Button
+      <button
         onClick={() => {
           navigate("/ImgUpload", {
             state: {
@@ -73,7 +74,7 @@ function HomePage() {
         }}
       >
         update my img
-      </Button>
+      </button>
       <PriceFilter
         minPrice={minPrice}
         maxPrice={maxPrice}

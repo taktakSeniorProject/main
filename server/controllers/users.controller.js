@@ -55,7 +55,7 @@ const addImguser=(req,res)=>{
     console.log(req.body)
     const {id}=req.params
     const {profile}=req.body;
-    const quer=`UPDATE user SET profile = "${profile}" where user_id= "${id}"`
+    const quer=`UPDATE user SET profile = "${profile}" where user_id= ${id} `
     db.promise().query(quer)
     res.send("added")
   } catch (error) {
@@ -66,8 +66,8 @@ const modifyUser=(req,res)=>{
   try {
     console.log(req.body)
     const {id}=req.params
-    const {username, email, phoneN }=req.body;
-    const quer=`UPDATE user SET username="${username}",email="${email}",phoneN="${phoneN}" where user_id= ${id}`
+    const {username, phoneN }=req.body;
+    const quer=`UPDATE user SET username="${username}",phoneN="${phoneN}" where user_id= ${id}`
     db.promise().query(quer)
     res.send("added")
   } catch (error) {

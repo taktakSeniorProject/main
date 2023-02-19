@@ -85,6 +85,7 @@ function OneItemDisplay() {
       <h1>{location.state.title}</h1>
       {/* <img src= {location.state.img}/> */}
       <h2>{location.state.description}</h2>
+      <img src={location.state.img} alt="" srcset="" />
       <input
         placeholder="add comment"
         type="text"
