@@ -12,6 +12,9 @@ import SignUp from './components/SingUp/SingUp.jsx';
 import OneItemDisplay from './components/itemsDisplay/OneItemDisplay.jsx';
 import Login from './components/logIn/Login.jsx'
 import UploadImg from './components/cloudD/UploadImg.jsx';
+import Terms from './components/footer/terms.jsx';
+import Privacy from './components/footer/priveacy.jsx';
+import ContactUs from './components/footer/contactUs.jsx';
 const router=createHashRouter([{
   path:'/',
   element:<HomePage/>
@@ -25,11 +28,23 @@ const router=createHashRouter([{
   element:<Login/>
 },{
   path:"/items/:itemId",
-  element: <OneItemDisplay/>
+  element: <OneItemDisplay />
 },
 {
   path:"/ImgUpload",
   element: <UploadImg/>
 },
+{
+path:"/terms",
+element:<Terms/>,
+},
+{
+path:"/privacy-policy",
+element:<Privacy/>,
+},
+{
+path:"contact-us",
+element:<ContactUs/>,
+}
 ])
 ReactDOM.render(<RouterProvider router={router}/>, document.getElementById('app'))
