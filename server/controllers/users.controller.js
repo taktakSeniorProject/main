@@ -2,6 +2,7 @@ const connection=require("../database-mysql/index")
 const jwt=require("jsonwebtoken");
 const dot=require('dotenv')
 dot.config()
+
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 const db = require("../database-mysql");
 db.connect((err) => {
@@ -33,7 +34,8 @@ const addOne= (req,res)=>{
           phoneN:phoneN,
         }
         console.log(user);
-       const accessToken= jwt.sign({email:user.email,password:user.password},process.env.ACCESS_TOKEN_SECRET)
+       const accessToken= jwt.sign({email:user.email,password:user.password,username:user.username},process.env.ACCESS_TOKEN_SECRET,{expiresIn:"1H"})
+       res.cookie("accessToken",accessToken)
        res.json({accessToken:accessToken})
     } catch (error) {
       console.log(error);
@@ -53,7 +55,7 @@ const addImguser=(req,res)=>{
     console.log(req.body)
     const {id}=req.params
     const {profile}=req.body;
-    const quer=`UPDATE user SET profile = "${profile}" where user_id= ${id}`
+    const quer=`UPDATE user SET profile = "${profile}" where user_id= "${id}"`
     db.promise().query(quer)
     res.send("added")
   } catch (error) {

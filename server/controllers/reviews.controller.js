@@ -10,18 +10,18 @@ db.connect((err) => {
       try{
       const {comment,revRating}=req.body
       const {idUser}=req.params
-     const quer=(`INSERT INTO review (revRating,comments,user_user_id) VALUES ("${revRating}","${comment}","${idUser}");`)
+     const quer=(`INSERT INTO review (revRating,comments,user_user_id) VALUES ("${revRating}","${comment}","${idUser}")`)
 
-     db.promise().query(quer)
-     res.json("comment added")
+     db.query(quer).then(()=>{
+      res.json("comment added")
+     })
+
     }catch(err){
       console.log(err);
     }
     }
     const getComments =(req,res)=>{
         const {iduser}=req.params
-      
-
 
 const quer=(`SELECT comments FROM review WHERE user_user_id = "${iduser}"`)
 db.query(quer).then((result)=>{res.json(result[0])})

@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 function UploadImg() {
+  const location = useLocation();
+  console.log(location);
   const [imageUpload, setimageUpload] = useState("");
-  const selectImg = () => {
+  const UploadImg = () => {
     const formData = new FormData();
     formData.append("file", imageUpload);
-    formData.append("upload_preset", "djqjuoks");
+    formData.append("upload_preset", "clzrszf3");
     axios
-      .post("https://api.cloudinary.com/v1_1/dk2x78b4b/image/upload", formData)
+      .post("https://api.cloudinary.com/v1_1/dp54rkywx/image/upload", formData)
       .then((response) => {
-        console.log();
+        console.log(response);
         console.log(response.data.etag);
         let imgurl = response.data.etag;
         axios
           .put(
-            `http://localhost:3000/api/user/updateUser/${
-              JSON.parse(localStorage.user).user_id
-            }`,
+            `http://localhost:3000/api/user/updateUser/${location.state.theUser[0].user_id}`,
             {
               profile: imgurl,
             }
@@ -26,7 +27,6 @@ function UploadImg() {
           });
       });
   };
-
   return (
     <div>
       <input
@@ -35,7 +35,7 @@ function UploadImg() {
           setimageUpload(e.target.files[0]);
         }}
       />
-      <button onClick={selectImg}>Submite</button>
+      <button onClick={UploadImg}>Submite</button>
     </div>
   );
 }

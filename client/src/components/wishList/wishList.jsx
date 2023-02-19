@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Button, Input } from "antd";
 import { ShoppingCartOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const wishList = () => {
   const [wishList, setWishList] = useState([]);
   const itemsLength = wishList.length;
+  const { id } = useParams();
+
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    wishList.forEach((item) => {
+      totalPrice += item.price;
+    });
+    return totalPrice;
+  };
 
   useEffect(() => getWishList(), []);
 
   const getWishList = (id) => {
     axios
-      .get(`http://127.0.0.1:3000/api/wishList/7`)
+      .get(`http://127.0.0.1:3000/api/wishList/${id}`)
       .then((result) => {
         setWishList(result.data);
       })
@@ -49,21 +58,27 @@ const wishList = () => {
   return (
     <div>
       {/* <h1>welcome{JSON.parse(localStorage.getItem(user.username))}</h1> */}
-      <ul>
-        <li> {itemsLength}</li>
+      <div>Total price: ${calculateTotalPrice()}</div>
+      <ul className="list">
+        <li className="number"> {itemsLength}</li>
         <li>
-          <ShoppingCartOutlined />
+          <ShoppingCartOutlined className="cart" />
         </li>
       </ul>
       {wishList.map((element, index) => {
         console.log(element);
         return (
-          <div key={index}>
+          <div key={index} className="elem">
             <img src={element.img} alt="" />
-            <h1>{element.title}</h1>
-            <h2>{element.price}</h2>
-            <h3>{element.description}</h3>
-            <Button type="primary" onClick={() => deleteItemFWL(7, element.id)}>
+            <ul>
+              <li>{element.title}</li>
+              <li>{element.price}</li>
+              <li>{element.description}</li>
+            </ul>
+            <Button
+              styletype="primary"
+              onClick={() => deleteItemFWL(7, element.id)}
+            >
               <DeleteOutlined />
             </Button>
           </div>

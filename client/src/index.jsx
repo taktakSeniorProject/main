@@ -29,7 +29,7 @@ const router = createHashRouter([
     element: <OneItemDisplay />,
   },
   {
-    path: "/wishList",
+    path: "/wishList/:id",
     element: <WishList />,
   },
   {
@@ -37,12 +37,24 @@ const router = createHashRouter([
     element: <Confirm />,
   },
   {
-    path: "/congrats",
-    element: <Congrats />,
+    path: "/SignUp",
+    element: <SignUp />,
   },
   {
-    path: "/upload",
+    path: "/Login",
+    element: <Login />,
+  },
+  {
+    path: "/items/:itemId",
+    element: <OneItemDisplay />,
+  },
+  {
+    path: "/ImgUpload",
     element: <UploadImg />,
+  },
+  {
+    path: "/congrats",
+    element: <Congrats />,
   },
 ]);
 ReactDOM.render(
