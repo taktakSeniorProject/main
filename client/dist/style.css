@@ -243,6 +243,7 @@
 .profilepic{
   width: 50px;
   height: 50px;
+  border-radius: 50%;
 }
 /* SIDEBAR */
 .img{
@@ -596,4 +597,81 @@ p {
   line-height: 1.5;
   color: #333;
   margin: 20px 0;
+}
+
+.congrats-confirm{
+  border-radius: 16px;
+    backdrop-filter: blur(5px);
+    box-shadow: -11px 9px 5px 0px rgba(0,0,0,0.75);
+    position: absolute;
+          width: 35%;
+          
+          transform: translate(-50%, -50%);
+          left: 50%;
+          top: 45%;
+          padding: 30px 50px;
+          text-align: center;
+
+}
+
+.out{
+  position: relative;
+  margin-top: 50px;
+}
+
+.congrats{
+  background-color: #ffffff;
+}
+.ok{
+width: 200;
+height: 200px;
+position: relative;
+margin-bottom: 100px;
+
+
+
+}
+.zz{
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.elem{
+    border-radius: 16px;
+    border: #222 solid;
+    backdrop-filter: blur(5px);
+    /* box-shadow: -11px 9px 5px 0px rgba(0,0,0,0.75); */
+    position: relative;
+    width: 180px;
+    height: 270px;
+    margin-top: 0px;
+    left: 30px;
+        
+}
+
+.elem img {
+  position: relative;
+  border-radius: 16px;
+  width: 100%;
+  height: 60%;
+}
+
+.elem ul li { 
+  position: relative;
+  margin: 0px;
+  font-size: 15px;
+  color: #E1D7C6;
+}
+
+.oneUserItems{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.itemImages{
+  width: 200px;
+  height: 200px;
+}
+.list{
+  position: relative;
+  margin-bottom: 150px;
 }

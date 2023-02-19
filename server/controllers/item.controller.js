@@ -15,6 +15,35 @@ db.query(GetItemsToBuy,(error,result)=>{
 })
   }
 
+const addItem=(req,res)=>{
+  try {
+    const {title,description,price,gategorie,img}=req.body
+    const{id}=req.params
+    console.log(req.params)
+    const quer=`INSERT INTO items (title, description, price, gategorie, img, user_user_id)
+    SELECT '${title}', '${description}', '${price}', '${gategorie}', '${img}', ${id}
+    FROM user
+    WHERE EXISTS (SELECT 1 FROM user WHERE user_id = ${id});
+    `
+    db.promise().query(quer)
+    res.json("addedItem")
+  } catch (error) {
+    
+  }
+}
+const addToWishList =  function(req,res){
+  
+  try {
+    const {userId, itemId} =req.params
+    const query = `INSERT INTO wishlists (user_user_id,item_id) VALUES ("${userId}", "${itemId}")`;
+    db.promise().query(query);
+    res.send('added');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error adding item to wishlist');
+  }
+  
+  }
 
   // const addItems =(req,res)=>{
   //   try {
@@ -29,4 +58,4 @@ db.query(GetItemsToBuy,(error,result)=>{
   //   console.error(error)    
   //   }
   // }  
-  module.exports = { GetItemsToBuy};
+  module.exports = {addToWishList ,GetItemsToBuy,addItem};

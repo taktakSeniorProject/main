@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import axios from "axios";
-import React from 'react';
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import {AiFillStar} from 'react-icons/ai'
@@ -10,11 +10,11 @@ import {BsFacebook} from 'react-icons/bs'
 import {AiOutlineTwitter} from 'react-icons/ai'
 
 function OneItemDisplay() {
-  
   const location = useLocation();
   console.log(location);
   const navigate = useNavigate();
-  const { itemsId } = useParams();
+  const { id } = useParams();
+  console.log(id);
   const [comment, setComment] = useState('');
   const [revRating, setRating] = useState(0);
   const [comments, setCommentss] = useState([]);
@@ -30,27 +30,42 @@ function OneItemDisplay() {
 
   const getComments = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/reviews/comment/${location.state.id}`);
+      const response = await axios.get(`http://localhost:3000/api/reviews/comment/${location.state.user_id}`);
       setCommentss(response.data);
     } catch (error) {
       console.log(error);
     }
   }
+  const handleAddWhishlist= ()=>{
+try{
+  axios.post(`http://localhost:3000/api/item/whishlist/${location.state.user_id}/${location.state.id}`).then((result)=>{console.log(result)})
+}
+catch(error){
+console.log(error);
+}
+  }
   const starRating = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= rating) {
-        stars.push(<span key={i} className="star"><AiFillStar/></span>);
+        stars.push(
+          <span key={i} className="star">
+            <AiFillStar />
+          </span>
+        );
       } else {
-        stars.push(<span key={i} className="star"><AiOutlineStar/></span>);
+        stars.push(
+          <span key={i} className="star">
+            <AiOutlineStar />
+          </span>
+        );
       }
     }
     return stars;
   };
-
   const getReviews = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/api/reviews/rating/${location.state.id}`);
+      const response = await axios.get(`http://localhost:3000/api/reviews/rating/${location.state.user_id}`);
       setReviewss(response.data);
     } catch (error) {
       console.log(error);
@@ -58,7 +73,7 @@ function OneItemDisplay() {
   }
 
   const handlePostComment = () => {
-    axios.post(`http://localhost:3000/api/reviews/review/${location.state.id}`, {
+    axios.post(`http://localhost:3000/api/reviews/review/${location.state.user_id}`, {
       comment: comment,
       revRating: revRating
     })
@@ -73,12 +88,13 @@ function OneItemDisplay() {
   }
 
   if (!location.state) {
-    return <div>...loading</div>
+    return <div>...loading</div>;
   }
 
   // Calculate the average rating
-  const averageRating = reviews.reduce((total, review) => total + review.revRating, 0) / reviews.length;
-
+  const averageRating =
+    reviews.reduce((total, review) => total + review.revRating, 0) /
+    reviews.length;
   return (
     <>
     <h1 className='item-card__title'>{location.state.title}</h1>
@@ -131,6 +147,7 @@ function OneItemDisplay() {
 
       <button onClick={()=>{
             navigate('/')}} >back to home page</button>
+            <button onClick={()=>handleAddWhishlist()}> add to  wishlist</button>
     </>
   );
 }

@@ -10,43 +10,45 @@ import UserIcon from '../UserIcon/UserIcon.jsx'
 import Footer from '../footer/footer.jsx'
 import { Link,useNavigate, useNavigation } from 'react-router-dom'
 function HomePage() {
-  const [data,setData]=useState([])
+  const [data, setData] = useState([]);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000);
   const[theUser,setTheUser]=useState([])
   const [priceFilterView,setPriceFilterView]=useState(false)
   // const [view,setView]=useState('home')
   // const [item,setItem]=useState({})
-  useEffect(()=>{
-    if(localStorage.length>1){
-    let email=JSON.parse(localStorage.user)
-    axios.get(`http://localhost:3000/api/user/getUserId/${email.email}`)
-    .then(res=>{
-      console.log(res.data)
-      setTheUser(res.data)
-    })
-    .catch(error=>{
-      throw error
-    })
-  }
-  else {
-    <Link to='/Login'></Link>
-  }
-  },[])
-  const navigate=useNavigate()
-  useEffect(()=>{
-    axios.get('http://localhost:3000/api/item')
-    .then(res=>{
-      setData(res.data)
-    })
-    .catch(error=>{
-      throw error
-    })
-  },[])
-  const filterCategories=(category)=>{
-    const newItems=data.filter((item)=>(item.gategorie)===category)
-    setData(newItems)
-  }
+  useEffect(() => {
+    if (localStorage.length > 1) {
+      let email = JSON.parse(localStorage.user);
+      axios
+        .get(`http://localhost:3000/api/user/getUserId/${email.email}`)
+        .then((res) => {
+          console.log(res.data);
+          setTheUser(res.data);
+        })
+        .catch((error) => {
+          throw error;
+        });
+    } else {
+      <Link to="/Login"></Link>;
+    }
+  }, []);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/api/item")
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((error) => {
+        throw error;
+      });
+  }, []);
+  const filterCategories = (category) => {
+    const newItems = data.filter((item) => item.gategorie === category);
+    setData(newItems);
+  };
   const filterItems = (namee) => {
     const newItems = data.filter(
       (item) =>
@@ -61,27 +63,38 @@ function HomePage() {
   }
   return (
     <div>
-     <Slider data={data} />
-     <button onClick={()=>handlePriceFilterView()}>show price filter</button>
-    <Navbar user={theUser} filterItems={filterItems}  />
-    {priceFilterView===true &&<PriceFilter
+      <Slider data={data} />
+      <Navbar user={theUser} />
+      <Search filterItems={filterItems} />
+      <Sidebar filterCategories={filterCategories} />
+      <Items data={data} />
+      {/* <OneItemDisplay item={item} /> */}
+      <button
+        onClick={() => {
+          navigate("/ImgUpload", {
+            state: {
+              theUser: theUser,
+            },
+          });
+        }}
+      >
+        update my img
+      </button>
+      <PriceFilter
         minPrice={minPrice}
         maxPrice={maxPrice}
         onMinPriceChange={setMinPrice}
         onMaxPriceChange={setMaxPrice}
         onApplyFilter={() => {
-          filterItems('');
-        }}/>} 
-        {/* <button onClick={()=>{
-         navigate("/account")
-        }}>account</button> */}
-
+          filterItems("");
+        }}
+      />
     <Search filterItems={filterItems} />
     <Sidebar filterCategories={filterCategories} />
-     <Items  data={data}/>
+     <Items theUser={theUser}  data={data}/>
    < Footer/>
    
     </div>
-  )
+  );
 }
 export default HomePage

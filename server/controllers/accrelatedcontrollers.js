@@ -13,7 +13,7 @@ db.connect((err) => {
     try {
       const query1 = `SELECT * from items WHERE user_user_id=${user_id}`
       return db.promise().query(query1)
-      .then((result)=>res.json(result))
+      .then((result)=>res.json(result[0]))
     } catch (error) {
       console.log(error);
     }
@@ -60,15 +60,29 @@ db.connect((err) => {
   try {
     const query5 = `SELECT * from user WHERE user_id=${user_id}`
      db.promise().query(query5)
-    .then((result)=>res.json(result))
+    .then((result)=>res.json(result[0]))
   } catch (error) {
     console.log(error);
   }
  }
 
-  
+
+ const useredit=(req,res)=>{
+  const {user_id}=req.params
+  const {username,phoneN,profile}=req.body
+  try {
+    const query6 = `UPDATE user SET username='${username}',
+    phoneN='${phoneN}',profile="${profile}" WHERE user_id=${user_id}`
+    
+    return db.promise().query(query6)
+    .then((result)=>res.json(result))
+  }catch (error) {
+    console.log(error)
+  }
+ }
 
 
+ 
 
 
-module.exports = {itemofuser,additem,deleteitem,edititems,usersinfo}
+module.exports = {itemofuser,additem,deleteitem,edititems,usersinfo,useredit}
