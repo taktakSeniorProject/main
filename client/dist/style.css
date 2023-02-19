@@ -337,3 +337,11 @@ font-weight: 300;
   }
 }
 
+.oneUserItems{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.itemImages{
+  width: 200px;
+  height: 200px;
+}

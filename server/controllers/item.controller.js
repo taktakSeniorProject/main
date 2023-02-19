@@ -15,7 +15,22 @@ db.query(GetItemsToBuy,(error,result)=>{
 })
   }
 
-
+const addItem=(req,res)=>{
+  try {
+    const {title,description,price,gategorie,img}=req.body
+    const{id}=req.params
+    console.log(req.params)
+    const quer=`INSERT INTO items (title, description, price, gategorie, img, user_user_id)
+    SELECT '${title}', '${description}', '${price}', '${gategorie}', '${img}', ${id}
+    FROM user
+    WHERE EXISTS (SELECT 1 FROM user WHERE user_id = ${id});
+    `
+    db.promise().query(quer)
+    res.json("addedItem")
+  } catch (error) {
+    
+  }
+}
   // const addItems =(req,res)=>{
   //   try {
   //     const {title,description,quantity,price,gategorie}=req.body;
@@ -29,4 +44,4 @@ db.query(GetItemsToBuy,(error,result)=>{
   //   console.error(error)    
   //   }
   // }  
-  module.exports = { GetItemsToBuy};
+  module.exports = { GetItemsToBuy,addItem};
