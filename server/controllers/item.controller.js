@@ -31,6 +31,20 @@ const addItem=(req,res)=>{
     
   }
 }
+const addToWishList =  function(req,res){
+  
+  try {
+    const {userId, itemId} =req.params
+    const query = `INSERT INTO wishlists (user_user_id,item_id) VALUES ("${userId}", "${itemId}")`;
+    db.promise().query(query);
+    res.send('added');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error adding item to wishlist');
+  }
+  
+  }
+
   // const addItems =(req,res)=>{
   //   try {
   //     const {title,description,quantity,price,gategorie}=req.body;
@@ -44,4 +58,4 @@ const addItem=(req,res)=>{
   //   console.error(error)    
   //   }
   // }  
-  module.exports = { GetItemsToBuy,addItem};
+  module.exports = {addToWishList ,GetItemsToBuy,addItem};

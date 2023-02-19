@@ -1,32 +1,56 @@
-import React from "react";
-import { Button, Input } from "antd";
+import React from 'react';
+import { Slider, InputNumber, Row, Col, Button } from 'antd';
 
-function PriceFilter({
-  minPrice,
-  maxPrice,
-  onMinPriceChange,
-  onMaxPriceChange,
-  onApplyFilter,
-}) {
+function PriceFilter({ minPrice, maxPrice, onMinPriceChange, onMaxPriceChange, onApplyFilter }) {
+  const onMinPriceInputChange = (value) => {
+    onMinPriceChange(value);
+  };
+
+  const onMaxPriceInputChange = (value) => {
+    onMaxPriceChange(value);
+  };
+
   return (
     <div>
-      <label htmlFor="minPrice">Minimum price:</label>
-      <Input
-        type="number"
-        id="minPrice"
-        value={minPrice}
-        onChange={(e) => onMinPriceChange(Number(e.target.value))}
-      />
-      <br />
-      <label htmlFor="maxPrice">Maximum price:</label>
-      <Input
-        type="number"
-        id="maxPrice"
-        value={maxPrice}
-        onChange={(e) => onMaxPriceChange(Number(e.target.value))}
-      />
-      <br />
-      <Button onClick={onApplyFilter}>Apply filter</Button>
+      <Row>
+        <Col span={8}>
+          <label htmlFor="minPriceInput">Min Price:</label>
+          <InputNumber
+            id="minPriceInput"
+            style={{ marginLeft: 16 }}
+            value={minPrice}
+            onChange={onMinPriceInputChange}
+          />
+        </Col>
+        <Col span={16}>
+        <Slider
+  range
+  min={0}
+  max={3000}
+  defaultValue={[minPrice, maxPrice]}
+  onChange={([min, max]) => {
+    onMinPriceChange(min);
+    onMaxPriceChange(max);
+  }}
+/>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={8}>
+          <label htmlFor="maxPriceInput">Max Price:</label>
+          <InputNumber
+            id="maxPriceInput"
+            style={{ marginLeft: 16 }}
+            value={maxPrice}
+            onChange={onMaxPriceInputChange}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24}>
+          <Button onClick={onApplyFilter}>Apply filter</Button>
+        </Col>
+      </Row>
     </div>
   );
 }

@@ -12,11 +12,10 @@ function Sidebar ({filterCategories}){
         setSideBar((prevState)=>!prevState)
     }
     return(
-        <div className="sidebarIcon" >
-        <BsReverseLayoutTextSidebarReverse onClick={()=>toggleSideBar()}/>
-        <div className={sideBar?"sideBar sideBar-open":"sideBar" }>
-<li onClick={()=>filterCategories('vehicles')}> <FaCarSide/>  vehicles</li>
-<li  onClick={()=>filterCategories('real estate')}><BsFillHouseDoorFill/>  real estate</li>
+      <div>
+        <div>
+<li onClick={()=>filterCategories('vehicles')}> <FaCarSide/> vehicles</li>
+<li  onClick={()=>filterCategories('real estate')}><BsFillHouseDoorFill/> real estate</li>
 <li onClick={()=>filterCategories('multimedia')}> <BsPhoneFill />multimedia</li>
 <li onClick={()=>filterCategories('hobbies')}> <BiFootball/> hobbies</li>
 <li onClick={()=>filterCategories('clothes')}> <FaTshirt/> clothes</li>

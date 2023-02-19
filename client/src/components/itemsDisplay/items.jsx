@@ -1,11 +1,15 @@
 import React from "react";
 import ItemDetailds from "./itemDetails.jsx";
-function Items ({data}){
-    // console.log(Data);
+import { Space } from "antd";
+function Items ({theUser,data}){
+     console.log(theUser);
     return(
+
         <div className="items">
+            
         {data.map((item,index)=>{
-return <ItemDetailds {...item} key={index} />
+            // console.log(item)
+return <Space><ItemDetailds   {...item} key={index} /></Space>
         })}
       
         </div>

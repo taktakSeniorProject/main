@@ -3,6 +3,7 @@ import { FaBars } from "react-icons/fa";
 import { links, social } from "./data";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button } from "antd";
+
 import UserIcon from "../userIcon/UserIcon.jsx";
 const Navbar = ({ user }) => {
   console.log(user, "from nav bar");
@@ -57,27 +58,9 @@ const Navbar = ({ user }) => {
           ref={linksContainerRef}
           style={linkStyles}
         >
-          <ul className="links" ref={linksRef}>
-            {links.map((link) => {
-              const { id, url, text } = link;
-              return (
-                <li key={id}>
-                  <a href={url}>{text}</a>
-                </li>
-              );
-            })}
-          </ul>
+          
         </div>
-        <ul className="social-icons">
-          {social.map((socialIcon) => {
-            const { id, url, icon } = socialIcon;
-            return (
-              <li key={id}>
-                <a href={url}>{icon}</a>
-              </li>
-            );
-          })}
-        </ul>
+
         {!userHere && (
           <>
             {" "}

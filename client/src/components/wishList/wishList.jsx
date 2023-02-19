@@ -8,7 +8,7 @@ const wishList = () => {
   const [wishList, setWishList] = useState([]);
   const itemsLength = wishList.length;
   const { id } = useParams();
-
+console.log(id)
   const calculateTotalPrice = () => {
     let totalPrice = 0;
     wishList.forEach((item) => {
@@ -17,12 +17,13 @@ const wishList = () => {
     return totalPrice;
   };
 
-  useEffect(() => getWishList(), []);
+  useEffect(() => getWishList(id), []);
 
   const getWishList = (id) => {
     axios
       .get(`http://127.0.0.1:3000/api/wishList/${id}`)
       .then((result) => {
+        console.log(result)
         setWishList(result.data);
       })
       .catch((err) => console.error(err));
@@ -32,7 +33,7 @@ const wishList = () => {
     axios
       .delete(`http://127.0.0.1:3000/api/wishList/${userId}/${itemId}`)
       .then((result) => {
-        getWishList();
+        getWishList(id);
       })
       .catch((err) => console.error(err));
   };
@@ -41,7 +42,7 @@ const wishList = () => {
     axios
       .delete(`http://127.0.0.1:3000/api/wishList/${id}`)
       .then((result) => {
-        getWishList();
+        getWishList(id);
       })
       .catch((err) => console.error(err));
   };
@@ -77,14 +78,14 @@ const wishList = () => {
             </ul>
             <Button
               styletype="primary"
-              onClick={() => deleteItemFWL(7, element.id)}
+              onClick={() => deleteItemFWL(id, element.id)}
             >
               <DeleteOutlined />
             </Button>
           </div>
         );
       })}
-      <Button type="primary" onClick={() => deletAllItemFWL(7)}>
+      <Button type="primary" onClick={() => deletAllItemFWL(id)}>
         <DeleteOutlined />
       </Button>
       <Link to="/confirm">

@@ -7,9 +7,10 @@ import {
   Routes,
 } from "react-router-dom";
 // import { RouterProvider } from "react-router-dom";
-import HomePage from "./components/HomePage/HomePage.jsx";
-import SignUp from "./components/SingUp/SingUp.jsx";
-import OneItemDisplay from "./components/itemsDisplay/OneItemDisplay.jsx";
+import HomePage from './components/HomePage/HomePage.jsx';
+import SignUp from './components/SingUp/SingUp.jsx';
+import OneItemDisplay from './components/itemsDisplay/OneItemDisplay.jsx';
+
 import Login from "./components/logIn/Login.jsx";
 import UploadImg from "./components/cloudD/UploadImg.jsx";
 import UserIcon from "./components/userIcon/UserIcon.jsx";
@@ -18,11 +19,14 @@ import ImagesUplead from "./components/userIcon/ImagesUplead.jsx";
 import WishList from "./components/wishList/wishList.jsx";
 import Congrats from "./components/wishList/congrats.jsx";
 import Confirm from "antd/es/modal/confirm.js";
-const router = createHashRouter([
-  {
-    path: "/",
-    element: <HomePage />,
-  },
+import Terms from './components/footer/terms.jsx';
+import Privacy from './components/footer/priveacy.jsx';
+import ContactUs from './components/footer/contactUs.jsx';
+const router=createHashRouter([{
+  path:'/',
+  element:<HomePage/>
+},
+ 
   {
     path: "/SignUp",
     element: <SignUp />,
@@ -31,10 +35,7 @@ const router = createHashRouter([
     path: "/Login",
     element: <Login />,
   },
-  {
-    path: "/items/:itemId",
-    element: <OneItemDisplay />,
-  },
+  
   {
     path: "/ImgUpload",
     element: <UploadImg />,
@@ -56,19 +57,39 @@ const router = createHashRouter([
     element: <ImagesUplead />,
   },
   {
-    path: "/wishList/:id",
-    element: <WishList />,
-  },
-  {
-    path: "/congrats",
-    element: <Congrats />,
-  },
-  {
-    path: "/confirm",
-    element: <Confirm />,
-  },
+    path:"/SignUp",
+    element:<SignUp/>
+},
+{
+  path:"/Login",
+  element:<Login/>
+},{
+  path:"/items/:itemId/:id",
+  element: <OneItemDisplay />
+},
+{
+path:"/terms",
+element:<Terms/>,
+},
+{
+path:"/privacy-policy",
+element:<Privacy/>,
+},
+{
+path:"contact-us",
+element:<ContactUs/>,
+},{
+path: "/wishList/:id",
+element: <WishList />,
+},
+{
+path: "/congrats",
+element: <Congrats />,
+},
+{
+path: "/confirm",
+element: <Confirm />,
+}
 ]);
-ReactDOM.render(
-  <RouterProvider router={router} />,
-  document.getElementById("app")
-);
+ReactDOM.render(<RouterProvider router={router}/>, document.getElementById('app'))
+
