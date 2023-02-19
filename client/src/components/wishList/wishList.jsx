@@ -1,15 +1,23 @@
-import React, { useState } from "react";
-import "antd/dist/antd.css";
-import { Button, Timeline, Space, Row, Col } from "antd";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { Button, Input } from "antd";
+import { ShoppingCartOutlined, DeleteOutlined } from "@ant-design/icons";
+
 const wishList = () => {
   const [wishList, setWishList] = useState([]);
+  const itemsLength = wishList.length;
+  const { id } = useParams();
+
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    wishList.forEach((item) => {
+      totalPrice += item.price;
+    });
+    return totalPrice;
+  };
+
+  useEffect(() => getWishList(), []);
 
   const getWishList = (id) => {
     axios
@@ -47,7 +55,43 @@ const wishList = () => {
       .catch((err) => console.error(err));
   };
 
-  return <div></div>;
+  return (
+    <div>
+      {/* <h1>welcome{JSON.parse(localStorage.getItem(user.username))}</h1> */}
+      <div>Total price: ${calculateTotalPrice()}</div>
+      <ul className="list">
+        <li className="number"> {itemsLength}</li>
+        <li>
+          <ShoppingCartOutlined className="cart" />
+        </li>
+      </ul>
+      {wishList.map((element, index) => {
+        console.log(element);
+        return (
+          <div key={index} className="elem">
+            <img src={element.img} alt="" />
+            <ul>
+              <li>{element.title}</li>
+              <li>{element.price}</li>
+              <li>{element.description}</li>
+            </ul>
+            <Button
+              styletype="primary"
+              onClick={() => deleteItemFWL(7, element.id)}
+            >
+              <DeleteOutlined />
+            </Button>
+          </div>
+        );
+      })}
+      <Button type="primary" onClick={() => deletAllItemFWL(7)}>
+        <DeleteOutlined />
+      </Button>
+      <Link to="/confirm">
+        <Button type="primary">Confirm</Button>
+      </Link>
+    </div>
+  );
 };
 
 export default wishList;
