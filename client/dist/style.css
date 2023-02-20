@@ -675,3 +675,186 @@ margin-bottom: 100px;
   position: relative;
   margin-bottom: 150px;
 }
+
+.form-log{
+  border-radius: 16px;
+    backdrop-filter: blur(5px);
+    box-shadow: -11px 9px 5px 0px rgba(0,0,0,0.75);
+    position: absolute;
+          width: 35%;
+          transform: translate(-50%, -50%);
+          left: 50%;
+          top: 45%;
+          padding: 30px 50px;
+
+}
+
+.submit-button{
+ 
+  margin-top: 15px;
+  left: 60%;
+ 
+}
+
+.check{
+  display: flex;
+  justify-content: flex-start;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.wishlist {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.wishlist-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  max-width: 300px;
+}
+
+.wishlist-item-image {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+.wishlist-item-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.wishlist-item-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.wishlist-item-description {
+  margin: 0.5rem 0;
+}
+
+.wishlist-item-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.wishlist-item-delete-button {
+  margin-top: auto;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.left-items {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+.right-items {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.total {
+  margin-right: 1rem;
+}
+
+.delete-button,
+.confirm-button {
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.confirm-link {
+  text-decoration: none;
+}
+
+.number {
+  margin-right: 1rem;
+}
+
+.cart {
+  margin-right: 1rem;
+  color: red;
+}
+
+.red {
+  color: red;
+}
+
+.line {
+  width: 100%;
+  border-top: 1px solid #ccc;
+  margin-top: 1rem;
+}
+
+
