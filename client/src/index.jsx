@@ -21,6 +21,7 @@ import Confirm from "./components/wishList/confirm.jsx";
 import Terms from "./components/footer/terms.jsx";
 import Privacy from "./components/footer/priveacy.jsx";
 import ContactUs from "./components/footer/contactUs.jsx";
+import ConfirmBuy from './components/wishList/confirmbyy.jsx'
 const router = createHashRouter([
   {
     path: "/",
@@ -92,6 +93,10 @@ const router = createHashRouter([
     path: "/confirm",
     element: <Confirm />,
   },
+  {
+    path: "/confirmbuy",
+    element: <ConfirmBuy />,
+  }
 ]);
 ReactDOM.render(
   <RouterProvider router={router} />,

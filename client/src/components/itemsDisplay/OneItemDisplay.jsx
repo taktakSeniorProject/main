@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import axios from "axios";
 import React from "react";
+import {Button} from 'antd'
 import { useNavigate } from "react-router-dom";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import {AiFillStar} from 'react-icons/ai'
@@ -84,7 +85,7 @@ console.log(error);
       setRefresh(!refresh) // update the reviews array after a new review is posted
     })
     .catch(error => {
-      console.log(error);
+      console.log(error); 
     });
   }
 
@@ -101,17 +102,27 @@ console.log(error);
     reviews.length;
   return (
     <>
-     <div className="product-box">
-    <h1 className='item-card__title'>{location.state.title}</h1>
-    <img className='item-card__image' src= {location.state.img[index]}/>
+    <div className='form-log'>
+     <div className="product-box" style={{
+      width:'100%',
+      marginTop:"40px",
+     }}>
+    <h3 className='item-card__title'>{location.state.title}</h3>
+    <img className='item-card__image' src= {location.state.img[index]} style={{
+      width:"100%",
+      height:"250px"
+    }}/>
     {console.log(index)}
     </div>
-    <button onClick={()=>setIndex(index+1)}>next</button>
-    <button onClick={()=>setIndex(index-1)}>previous</button>
+    <Button type='primary' onClick={()=>setIndex(index+1)}>next</Button>
+    <Button type='primary' onClick={()=>setIndex(index-1)}>previous</Button>
     <h2 className='item-card__price'>
       <span className="item-card__price--old">${location.state.price}</span>
       <span className="item-card__price--new">${(location.state.price * 0.8).toFixed(2)}</span>
     </h2>
+    <Button  type='primary' onClick={()=>navigate('/confirmbuy',{state:{
+      id:location.state.user_id 
+    }})}>buy</Button> 
       <input
          placeholder="add comment"
         type="text"
@@ -125,10 +136,10 @@ console.log(error);
   <option value="4">4 stars</option>
   <option value="5">5 stars</option>
 </select>
-      <button onClick={() => {handlePostComment(comment, revRating)}}>comment</button>
+      <Button type='primary' onClick={() => {handlePostComment(comment, revRating)}}>comment</Button>
       
       
-      <button onClick={()=>handleCommentView()}>show comments</button>
+      <Button type='primary' onClick={()=>handleCommentView()}>show comments</Button>
       {commentsView===true && 
       <div>
        <h2>Comments:</h2>
@@ -158,9 +169,10 @@ console.log(error);
       <AiOutlineTwitter/>
       </TwitterShareButton>
 
-      <button onClick={()=>{
-            navigate('/')}} >back to home page</button>
-            <button onClick={()=>handleAddWhishlist()}> add to  wishlist</button>
+      <Button type='primary' onClick={()=>{
+            navigate('/')}} >back to home page</Button>
+            <Button type='primary' onClick={()=>handleAddWhishlist()}> add to  wishlist</Button>
+            </div>
     </>
   );
 }

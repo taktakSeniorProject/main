@@ -1,6 +1,6 @@
 import { Link,useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-function ItemDetails({ title, description, quantity, price, category, img,id,user_user_id }) {
+function ItemDetails({ title, description, quantity, price, gategorie, img,id,user_user_id }) {
   // const [user,setUser]=useState(theUser[0].user_id)
   //  console.log(user);
 
@@ -26,7 +26,7 @@ function ItemDetails({ title, description, quantity, price, category, img,id,use
       <span className="item-card__price--old">${price}</span>
       <span className="item-card__price--new">${( price * 0.8).toFixed(2)}</span>
     </h2>
-        <h1>{category}</h1>
+        <h5>{gategorie}</h5>
       </div>
     )
   }
