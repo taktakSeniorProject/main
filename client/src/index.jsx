@@ -17,15 +17,16 @@ import Changeinfo from "./change the info for the user/Changeinfo.jsx";
 import ImagesUplead from "./components/userIcon/ImagesUplead.jsx";
 import WishList from "./components/wishList/wishList.jsx";
 import Congrats from "./components/wishList/congrats.jsx";
-import Confirm from "antd/es/modal/confirm.js";
-import Terms from './components/footer/terms.jsx';
-import Privacy from './components/footer/priveacy.jsx';
-import ContactUs from './components/footer/contactUs.jsx';
-const router=createHashRouter([{
-  path:'/',
-  element:<HomePage/>
-},
- 
+import Confirm from "./components/wishList/confirm.jsx";
+import Terms from "./components/footer/terms.jsx";
+import Privacy from "./components/footer/priveacy.jsx";
+import ContactUs from "./components/footer/contactUs.jsx";
+const router = createHashRouter([
+  {
+    path: "/",
+    element: <HomePage />,
+  },
+
   {
     path: "/SignUp",
     element: <SignUp />,
@@ -34,7 +35,7 @@ const router=createHashRouter([{
     path: "/Login",
     element: <Login />,
   },
-  
+
   {
     path: "/ImgUpload",
     element: <UploadImg />,
@@ -56,39 +57,43 @@ const router=createHashRouter([{
     element: <ImagesUplead />,
   },
   {
-    path:"/SignUp",
-    element:<SignUp/>
-},
-{
-  path:"/Login",
-  element:<Login/>
-},{
-  path:"/items/:itemId/:id",
-  element: <OneItemDisplay />
-},
-{
-path:"/terms",
-element:<Terms/>,
-},
-{
-path:"/privacy-policy",
-element:<Privacy/>,
-},
-{
-path:"contact-us",
-element:<ContactUs/>,
-},{
-path: "/wishList/:id",
-element: <WishList />,
-},
-{
-path: "/congrats",
-element: <Congrats />,
-},
-{
-path: "/confirm",
-element: <Confirm />,
-}
+    path: "/SignUp",
+    element: <SignUp />,
+  },
+  {
+    path: "/Login",
+    element: <Login />,
+  },
+  {
+    path: "/items/:itemId/:id",
+    element: <OneItemDisplay />,
+  },
+  {
+    path: "/terms",
+    element: <Terms />,
+  },
+  {
+    path: "/privacy-policy",
+    element: <Privacy />,
+  },
+  {
+    path: "contact-us",
+    element: <ContactUs />,
+  },
+  {
+    path: "/wishList/:id",
+    element: <WishList />,
+  },
+  {
+    path: "/congrats",
+    element: <Congrats />,
+  },
+  {
+    path: "/confirm",
+    element: <Confirm />,
+  },
 ]);
-ReactDOM.render(<RouterProvider router={router}/>, document.getElementById('app'))
-
+ReactDOM.render(
+  <RouterProvider router={router} />,
+  document.getElementById("app")
+);

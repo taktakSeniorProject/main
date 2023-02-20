@@ -14,7 +14,7 @@ const Navbar = ({ user }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   useEffect(() => {
-    if (localStorage.length === 0) {
+    if (localStorage.length === 1) {
       setUserhere(false);
     } else {
       setUserhere(true);

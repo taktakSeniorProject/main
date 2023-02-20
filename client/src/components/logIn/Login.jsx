@@ -1,18 +1,18 @@
-import React, { useState } from 'react'
-import { Button, Checkbox, Form, Input , Alert, Space  } from 'antd';
-
-import axios from 'axios';
-const bcrypt=require("bcryptjs");
+import React, { useState } from "react";
+import { Button, Checkbox, Form, Input, Alert, Space } from "antd";
+import { Link } from "react-router-dom";
+import axios from "axios";
+const bcrypt = require("bcryptjs");
 
 function Login() {
   const [form] = Form.useForm();
   const [emailTest, setEmailTest] = useState(false);
   const [passwordTest, setPasswordTest] = useState(false);
   const [invalidCredentials, setInvalidCredentials] = useState(false);
-  
+
   const validateEmail = (rule, value) => {
     if (value && !/^\S+@\S+\.\S+$/.test(value)) {
-      return Promise.reject('Invalid email address');
+      return Promise.reject("Invalid email address");
     } else {
       return Promise.resolve();
     }
@@ -20,31 +20,42 @@ function Login() {
 
   const validatePassword = (rule, value) => {
     if (value && value.length < 5) {
-      return Promise.reject('Password is too short');
+      return Promise.reject("Password is too short");
     } else {
       return Promise.resolve();
     }
   };
 
   const handleSubmit = (values) => {
-
-    axios.get(`http://localhost:3000/api/user/getUser`, {headers: {"authorization": `Bearer ${localStorage.getItem('access_token')}`}})
-      .then((res) => {
-        console.log(res)
-        if (res.data.length === 0 || !bcrypt.compare(values.password, res.data.password)) {
+    try {
+      axios
+        .get(`http://localhost:3000/api/user/getUser`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          if (
+            res.data.length === 0 ||
+            !bcrypt.compare(values.password, res.data.password)
+          ) {
+            setInvalidCredentials(true);
+          } else {
+            localStorage.setItem("user", JSON.stringify(res.data));
+            window.location.href = "/";
+          }
+        })
+        .catch((error) => {
           setInvalidCredentials(true);
-        } else {
-          localStorage.setItem('user', JSON.stringify(res.data));
-          window.location.href = '/';
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+        });
+    } catch (error) {
+      setInvalidCredentials(true);
+    }
+  };
 
   return (
-    <div>
+    <div className="form-log">
       <Form
         form={form}
         name="login"
@@ -57,7 +68,6 @@ function Login() {
         style={{
           maxWidth: 600,
         }}
-      
       >
         <Form.Item
           label="Email"
@@ -65,14 +75,14 @@ function Login() {
           rules={[
             {
               required: true,
-              message: 'Please input your email',
+              message: "Please input your email",
             },
             {
-              validator: validateEmail
-            }
+              validator: validateEmail,
+            },
           ]}
         >
-          <Input />
+          <Input style={{ height: "30px" }} />
         </Form.Item>
 
         <Form.Item
@@ -81,11 +91,11 @@ function Login() {
           rules={[
             {
               required: true,
-              message: 'Please input your password',
+              message: "Please input your password",
             },
             {
-              validator: validatePassword
-            }
+              validator: validatePassword,
+            },
           ]}
         >
           <Input.Password />
@@ -103,40 +113,33 @@ function Login() {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" onClick={(e)=>{
-            handleSubmit(e);
-          }}>
+          <Button
+            className="submit-button"
+            type="primary"
+            htmlType="submit"
+            onClick={(e) => {
+              handleSubmit(e);
+            }}
+          >
             Submit
           </Button>
         </Form.Item>
 
         {emailTest && (
-          <Alert
-            message="Invalid email address"
-            type="error"
-            showIcon
-          />
+          <Alert message="Invalid email address" type="error" showIcon />
         )}
 
         {passwordTest && (
-          <Alert
-            message="Password is too short"
-            type="error"
-            showIcon
-          />
+          <Alert message="Password is too short" type="error" showIcon />
         )}
 
         {invalidCredentials && (
-          <Alert
-            message="Invalid email or password"
-            type="error"
-            showIcon
-          />
+          <Alert message="Invalid email or password" type="error" showIcon />
         )}
+        <Link to="/SignUp">i don't have an account</Link>
       </Form>
     </div>
   );
 }
 
 export default Login;
-``

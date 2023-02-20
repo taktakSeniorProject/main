@@ -9,7 +9,6 @@ import {AiOutlineStar} from 'react-icons/ai'
 import {BsFacebook} from 'react-icons/bs'
 import {AiOutlineTwitter} from 'react-icons/ai'
 
-
 function OneItemDisplay() {
   const location = useLocation();
   console.log(location);
