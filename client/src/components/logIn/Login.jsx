@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Checkbox, Form, Input , Alert, Space  } from 'antd';
-
+import {Link} from 'react-router-dom'
 import axios from 'axios';
 const bcrypt=require("bcryptjs");
 
@@ -27,21 +27,27 @@ function Login() {
   };
 
   const handleSubmit = (values) => {
-
-    axios.get(`http://localhost:3000/api/user/getUser`, {headers: {"authorization": `Bearer ${localStorage.getItem('access_token')}`}})
-      .then((res) => {
-        console.log(res)
-        if (res.data.length === 0 || !bcrypt.compare(values.password, res.data.password)) {
-          setInvalidCredentials(true);
-        } else {
-          localStorage.setItem('user', JSON.stringify(res.data));
-          window.location.href = '/';
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
+try {
+  
+  axios.get(`http://localhost:3000/api/user/getUser`, {headers: {"authorization": `Bearer ${localStorage.getItem('access_token')}`}})
+    .then((res) => {
+      console.log(res)
+      if (res.data.length === 0 || !bcrypt.compare(values.password, res.data.password)) {
+        
+        setInvalidCredentials(true);
+      } else {
+        localStorage.setItem('user', JSON.stringify(res.data));
+        window.location.href = '/';
+      }
+    })
+    .catch((error) => {
+      setInvalidCredentials(true);
+    });
+} catch (error) {
+  setInvalidCredentials(true);
+}
+  
+}
 
   return (
     <div>
@@ -133,10 +139,11 @@ function Login() {
             showIcon
           />
         )}
+        <Link to="/SignUp">i don't have an account</Link>
       </Form>
     </div>
   );
 }
 
 export default Login;
-``
+
