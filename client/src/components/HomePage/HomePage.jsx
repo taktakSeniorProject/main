@@ -89,9 +89,7 @@ function HomePage() {
           filterItems("");
         }}
       />
-    <Search filterItems={filterItems} />
-    <Sidebar filterCategories={filterCategories} />
-     <Items theUser={theUser}  data={data}/>
+
    < Footer/>
    
     </div>

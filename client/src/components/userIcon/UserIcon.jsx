@@ -121,11 +121,12 @@ export default function Basic() {
                     <Button onClick={handleClick}>Change my info</Button>
                     <div className="oneUserItems">
                       {data.map((item, i) => {
+                        console.log(data)
                         return <AllItemsForUser key={i} item={item} />;
                       })}
                     </div>
                     <div>
-                      <Button onClick={handleImages}></Button>
+                      <Button onClick={handleImages}>add an item</Button>
                     </div>
                   </div>
                 </div>
