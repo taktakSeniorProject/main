@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import {useLocation,Link,useNavigate,useParams } from 'react-router-dom'
 import { Button, Input, Alert, Space } from "antd";
 import axios from 'axios';
-import AllItemsForUser from './AllItemsForUser.jsx';
 function ImagesUplead() {
     let array=[]
     const [title, setTitle] = useState('')
@@ -36,9 +35,7 @@ console.log(selectedFiles)
     axios.all(requests)
       .then((results) => {
         (results.map((result) =>{console.log("mmmmmmmmmmm",result.data)
-            
         array.push(result.data.secure_url)}));
-        // Do something with the array of uploaded image URLs
       }).then((results) =>{
         console.log(JSON.stringify(array) );
         axios.post(`http://localhost:3000/api/item/addItem/${id}`,{
@@ -47,7 +44,7 @@ console.log(selectedFiles)
             price:price,
             gategorie:gategorie,
             img:JSON.stringify(array),
-            user_id:34
+            user_id:id
         }).then((res)=>{
             console.log(res)
         })
@@ -73,11 +70,14 @@ console.log(selectedFiles)
             placeholder='description'
             value={description}/>
 
-            <input type='text' 
-            onChange={(e)=>setGategorie(e.target.value)
-            }
-            placeholder='gategorie'
-            value={gategorie} />
+<select value={revRating} onChange={(e) => setGategorie(e.target.value)}>
+  <option value="vehicles">vehicles</option>
+  <option value="real estate">real estate</option>
+  <option value="multimedia">multimedia</option>
+  <option value="hobbies">hobbies</option>
+  <option value="clothes">clothes</option>
+</select>
+
              <input type='number' 
             onChange={(e)=>setPrice(e.target.value)
             }

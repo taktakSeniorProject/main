@@ -6,7 +6,7 @@ import {
   PhoneOutlined,
   LockOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const bcrypt = require("bcryptjs");
 import axios from "axios";
 
@@ -17,7 +17,7 @@ function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [errors, setErrors] = useState({});
-
+  const navigation = useNavigate();
   const validateForm = () => {
     let errors = {};
     let isValid = true;
@@ -83,9 +83,10 @@ function SignUp() {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     if (validateForm()) {
       add();
+      navigation("/SignUp");
     }
   };
 

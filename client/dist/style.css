@@ -601,7 +601,6 @@ p {
 
 .congrats-confirm{
   border-radius: 16px;
-    backdrop-filter: blur(5px);
     box-shadow: -11px 9px 5px 0px rgba(0,0,0,0.75);
     position: absolute;
           width: 35%;
@@ -639,7 +638,6 @@ margin-bottom: 100px;
 .elem{
     border-radius: 16px;
     border: #222 solid;
-    backdrop-filter: blur(5px);
     /* box-shadow: -11px 9px 5px 0px rgba(0,0,0,0.75); */
     position: relative;
     width: 180px;
@@ -665,12 +663,64 @@ margin-bottom: 100px;
 
 .oneUserItems{
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr ;
+  background-color: black;
 }
+.oneUserItems img{
+  width: 256px;
+}
+.oneUserItems img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  transition: all 0.2s ease-in-out;
+}
+
+.oneUserItems img:hover {
+  opacity: 0.8;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
+}
+
+.oneUserItems img img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.oneUserItems img img:hover {
+  cursor: pointer;
+}
+
+.oneUserItems img img:focus {
+  outline: none;
+}
+
+.oneUserItems img img:active {
+  transform: scale(0.9);
+}
+
+.oneUserItems img img::before {
+  content: attr(alt);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 5px;
+  font-size: 12px;
+  text-align: center;
+}
+
+
 .itemImages{
   width: 200px;
   height: 200px;
 }
+
 .list{
   position: relative;
   margin-bottom: 150px;
@@ -858,3 +908,8 @@ margin-bottom: 100px;
 }
 
 
+
+.imgforuser{
+  width: 100px;
+  height: 100px;
+}
