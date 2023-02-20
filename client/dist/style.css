@@ -646,7 +646,6 @@ margin-bottom: 100px;
     height: 270px;
     margin-top: 0px;
     left: 30px;
-        
 }
 
 .elem img {
@@ -674,4 +673,31 @@ margin-bottom: 100px;
 .list{
   position: relative;
   margin-bottom: 150px;
+}
+.cate {
+  border-radius: 1rem;
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  width: 8%;
+  background-color: #f2f2f2;
+  color:#579BB1;
+  margin: 0.5rem;
+  margin-top: -3.5%;
+}
+
+.cate:hover {
+  background-color: #007bff1a;
+  color: #ff0000;
+}
+
+.containerrr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 10vh;
 }

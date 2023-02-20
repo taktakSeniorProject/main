@@ -21,10 +21,12 @@ function ItemDetails({ title, description, quantity, price, category, img,id,use
                 }
             })
         }}>{title}</h1>
-        <img  className="product-img" src={img} alt={title} />
-        <h5 className="price">{price}</h5>
+        <img  className="product-img" src={img[0]} alt={title} />
+        <h2 className='item-card__price'>
+      <span className="item-card__price--old">${price}</span>
+      <span className="item-card__price--new">${( price * 0.8).toFixed(2)}</span>
+    </h2>
         <h1>{category}</h1>
-        
       </div>
     )
   }

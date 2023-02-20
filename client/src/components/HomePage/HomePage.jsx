@@ -15,7 +15,7 @@ function HomePage() {
   const [maxPrice, setMaxPrice] = useState(1000);
   const[theUser,setTheUser]=useState([])
   const [priceFilterView,setPriceFilterView]=useState(false)
-  // const [view,setView]=useState('home')
+  // const [view,setView]=useState(false)
   // const [item,setItem]=useState({})
   useEffect(() => {
     if (localStorage.length > 1) {
@@ -40,6 +40,7 @@ function HomePage() {
       .get("http://localhost:3000/api/item")
       .then((res) => {
         setData(res.data);
+        // console.log(res.data);
       })
       .catch((error) => {
         throw error;
@@ -66,20 +67,8 @@ function HomePage() {
       <Slider data={data} />
       <Navbar user={theUser} />
       <Search filterItems={filterItems} />
-      <Sidebar filterCategories={filterCategories} />
-      <Items data={data} />
-      {/* <OneItemDisplay item={item} /> */}
-      <button
-        onClick={() => {
-          navigate("/ImgUpload", {
-            state: {
-              theUser: theUser,
-            },
-          });
-        }}
-      >
-        update my img
-      </button>
+      <div className='sidebarWork'>
+      <Sidebar  filterCategories={filterCategories} />
       <PriceFilter
         minPrice={minPrice}
         maxPrice={maxPrice}
@@ -89,12 +78,10 @@ function HomePage() {
           filterItems("");
         }}
       />
-    <Search filterItems={filterItems} />
-    <Sidebar filterCategories={filterCategories} />
-     <Items theUser={theUser}  data={data}/>
+      </div>
+      <Items data={data} />
    < Footer/>
-   
     </div>
   );
 }
-export default HomePage
+export default HomePage 

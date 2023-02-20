@@ -12,15 +12,15 @@ function Sidebar ({filterCategories}){
         setSideBar((prevState)=>!prevState)
     }
     return(
-      <div>
-        <div>
-<li onClick={()=>filterCategories('vehicles')}> <FaCarSide/> vehicles</li>
-<li  onClick={()=>filterCategories('real estate')}><BsFillHouseDoorFill/> real estate</li>
-<li onClick={()=>filterCategories('multimedia')}> <BsPhoneFill />multimedia</li>
-<li onClick={()=>filterCategories('hobbies')}> <BiFootball/> hobbies</li>
-<li onClick={()=>filterCategories('clothes')}> <FaTshirt/> clothes</li>
+      <div >
+        <div className="containerrr" >
+<li className="cate" onClick={()=>filterCategories('vehicles')}> <FaCarSide/> vehicles</li>
+<li className="cate" onClick={()=>filterCategories('real estate')}><BsFillHouseDoorFill/> real estate</li>
+<li className="cate" onClick={()=>filterCategories('multimedia')}> <BsPhoneFill />multimedia</li>
+<li className="cate" onClick={()=>filterCategories('hobbies')}> <BiFootball/> hobbies</li>
+<li className="cate" onClick={()=>filterCategories('clothes')}> <FaTshirt/> clothes</li>
         </div>
         </div>
     )
 }
-export default Sidebar
+export default Sidebar  

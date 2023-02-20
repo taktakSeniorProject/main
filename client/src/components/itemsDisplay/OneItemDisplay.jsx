@@ -9,6 +9,7 @@ import {AiOutlineStar} from 'react-icons/ai'
 import {BsFacebook} from 'react-icons/bs'
 import {AiOutlineTwitter} from 'react-icons/ai'
 
+
 function OneItemDisplay() {
   const location = useLocation();
   console.log(location);
@@ -19,9 +20,10 @@ function OneItemDisplay() {
   const [revRating, setRating] = useState(0);
   const [comments, setCommentss] = useState([]);
   const [reviews, setReviewss] = useState([]);
+  const [commentsView,setCommentView]=useState(false)
   const [view,setView]=useState(false)
-  
-  const [refresh,setRefresh]=useState(false)
+const [index,setIndex]=useState(0)  
+const [refresh,setRefresh]=useState(false)
  
   useEffect(() => {
     getComments();
@@ -87,6 +89,9 @@ console.log(error);
     });
   }
 
+  const handleCommentView=()=>{
+    setCommentView(!commentsView)
+  }
   if (!location.state) {
     return <div>...loading</div>;
   }
@@ -97,13 +102,17 @@ console.log(error);
     reviews.length;
   return (
     <>
+     <div className="product-box">
     <h1 className='item-card__title'>{location.state.title}</h1>
-    <img className='item-card__image' src= {location.state.img}/>
+    <img className='item-card__image' src= {location.state.img[index]}/>
+    {console.log(index)}
+    </div>
+    <button onClick={()=>setIndex(index+1)}>next</button>
+    <button onClick={()=>setIndex(index-1)}>previous</button>
     <h2 className='item-card__price'>
       <span className="item-card__price--old">${location.state.price}</span>
       <span className="item-card__price--new">${(location.state.price * 0.8).toFixed(2)}</span>
     </h2>
-  
       <input
          placeholder="add comment"
         type="text"
@@ -120,12 +129,17 @@ console.log(error);
       <button onClick={() => {handlePostComment(comment, revRating)}}>comment</button>
       
       
+      <button onClick={()=>handleCommentView()}>show comments</button>
+      {commentsView===true && 
+      <div>
        <h2>Comments:</h2>
       <ul>
         {comments.map((comment, index) => (
           <li key={index}>{comment.comments}</li>
         ))}
       </ul>
+      </div>
+      }
       <h2>Reviews:</h2>
       
     {view ===true &&  <div>
