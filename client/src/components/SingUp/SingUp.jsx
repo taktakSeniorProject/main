@@ -6,7 +6,7 @@ import {
   PhoneOutlined,
   LockOutlined,
 } from "@ant-design/icons";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const bcrypt = require("bcryptjs");
 import axios from "axios";
 
@@ -17,7 +17,7 @@ function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [errors, setErrors] = useState({});
-  const navigation=useNavigate()
+  const navigation = useNavigate();
   const validateForm = () => {
     let errors = {};
     let isValid = true;
@@ -65,12 +65,15 @@ function SignUp() {
 
   const add = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/api/user/addUser", {
-        username: username,
-        email: email,
-        password: bcrypt.hashSync(password),
-        phoneN: phone,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/user/addUser",
+        {
+          username: username,
+          email: email,
+          password: bcrypt.hashSync(password),
+          phoneN: phone,
+        }
+      );
       console.log(response);
       localStorage.clear();
       localStorage.setItem("access_token", response.data.accessToken);
@@ -83,13 +86,12 @@ function SignUp() {
     // event.preventDefault();
     if (validateForm()) {
       add();
-      navigation('/SignUp')
-      
+      navigation("/SignUp");
     }
   };
 
   return (
-    <div>
+    <div className="form-log">
       <form onSubmit={handleSubmit}>
         <Input
           type="text"
@@ -97,6 +99,7 @@ function SignUp() {
           prefix={<UserOutlined />}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          style={{ marginBottom: "1rem" }}
         />
         {errors.username && <Alert message={errors.username} type="error" />}
         <Input
@@ -105,6 +108,7 @@ function SignUp() {
           prefix={<MailOutlined />}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          style={{ marginBottom: "1rem" }}
         />
         {errors.email && <Alert message={errors.email} type="error" />}
         <Input
@@ -113,6 +117,7 @@ function SignUp() {
           prefix={<PhoneOutlined />}
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
+          style={{ marginBottom: "1rem" }}
         />
         {errors.phone && <Alert message={errors.phone} type="error" />}
         <Input
@@ -121,6 +126,7 @@ function SignUp() {
           prefix={<LockOutlined />}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          style={{ marginBottom: "1rem" }}
         />
         {errors.password && <Alert message={errors.password} type="error" />}
         <Input
@@ -128,22 +134,29 @@ function SignUp() {
           placeholder={<LockOutlined />}
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          {errors.confirmPassword && (
+          style={{ marginBottom: "1rem" }}
+        />
+        {errors.confirmPassword && (
           <Alert message={errors.confirmPassword} type="error" />
-          )}
-          <Space>
-          <Button type="primary" htmlType="submit" onClick={(e)=>{
-            handleSubmit(e)
-          }}>
-          Sign up
-          </Button>
-          
+        )}
+        <Space>
+          <Link to="/Login">
+            <Button
+              type="primary"
+              htmlType="submit"
+              onClick={(e) => {
+                handleSubmit(e);
+              }}
+              style={{ marginBottom: "1rem" }}
+            >
+              Sign up
+            </Button>
+          </Link>
           <Link to="/Login">Already have an account? Sign in</Link>
-          </Space>
-          </form>
-          </div>
-          );
-          }
-          
-          export default SignUp;
+        </Space>
+      </form>
+    </div>
+  );
+}
+
+export default SignUp;
