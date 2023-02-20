@@ -104,7 +104,7 @@ const wishList = () => {
           console.log(element);
           return (
             <div key={index} className="wishlist-item">
-              <img src={element.img} alt="" className="wishlist-item-image" />
+              <img src={element.img[0]} alt="" className="wishlist-item-image" />
               <div className="wishlist-item-details">
                 <h2 className="wishlist-item-title">{element.title}</h2>
                 <p className="wishlist-item-description">

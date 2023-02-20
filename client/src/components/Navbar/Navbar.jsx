@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { FaBars } from "react-icons/fa";
 import { links, social } from "./data";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -9,9 +9,7 @@ const Navbar = ({ user }) => {
   console.log(user, "from nav bar");
 
   const [showLinks, setShowLinks] = useState(false);
-  const linksContainerRef = useRef(null);
   const [userHere, setUserhere] = useState(true);
-  const linksRef = useRef(null);
   const [navig, setnavig] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
@@ -29,14 +27,7 @@ const Navbar = ({ user }) => {
       },
     });
   };
-  const toggleLinks = () => {
-    setShowLinks(!showLinks);
-  };
-  const linkStyles = {
-    height: showLinks
-      ? `${linksRef.current.getBoundingClientRect().height}px`
-      : "0px",
-  };
+ 
   return (
     <nav>
       <div className="nav-center">
@@ -49,14 +40,9 @@ const Navbar = ({ user }) => {
             className="logo"
             alt="logo"
           />
-          <button className="nav-toggle" onClick={toggleLinks}>
-            <FaBars />
-          </button>
         </div>
         <div
           className="links-container"
-          ref={linksContainerRef}
-          style={linkStyles}
         >
           
         </div>

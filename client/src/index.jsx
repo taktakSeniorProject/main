@@ -7,10 +7,9 @@ import {
   Routes,
 } from "react-router-dom";
 // import { RouterProvider } from "react-router-dom";
-import HomePage from "./components/HomePage/HomePage.jsx";
-import SignUp from "./components/SingUp/SingUp.jsx";
-import OneItemDisplay from "./components/itemsDisplay/OneItemDisplay.jsx";
-
+import HomePage from './components/HomePage/HomePage.jsx';
+import SignUp from './components/SingUp/SingUp.jsx';
+import OneItemDisplay from './components/itemsDisplay/OneItemDisplay.jsx';
 import Login from "./components/logIn/Login.jsx";
 import UploadImg from "./components/cloudD/UploadImg.jsx";
 import UserIcon from "./components/userIcon/UserIcon.jsx";
@@ -22,6 +21,7 @@ import Confirm from "./components/wishList/confirm.jsx";
 import Terms from "./components/footer/terms.jsx";
 import Privacy from "./components/footer/priveacy.jsx";
 import ContactUs from "./components/footer/contactUs.jsx";
+import ConfirmBuy from './components/wishList/confirmbyy.jsx'
 const router = createHashRouter([
   {
     path: "/",
@@ -93,6 +93,10 @@ const router = createHashRouter([
     path: "/confirm",
     element: <Confirm />,
   },
+  {
+    path: "/confirmbuy",
+    element: <ConfirmBuy />,
+  }
 ]);
 ReactDOM.render(
   <RouterProvider router={router} />,

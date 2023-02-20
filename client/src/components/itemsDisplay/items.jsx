@@ -8,10 +8,9 @@ function Items ({theUser,data}){
         <div className="items">
             
         {data.map((item,index)=>{
-            // console.log(item)
+         console.log(item)
 return <Space><ItemDetailds   {...item} key={index} /></Space>
         })}
-      
         </div>
     )
 }
